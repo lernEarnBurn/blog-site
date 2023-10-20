@@ -1,11 +1,16 @@
 const express = require('express')
 const mongoose = require('mongoose');
+const crypto = require('crypto')
+const passport = require('passport')
+const local = require('./authStrats/local')
+const session = require('express-session')
 
-const createRouter = require('./routers/createRouter')
-const readRouter = require('./routers/readRouter')
-const updateRouter = require('./routers/updateRouter')
-const deleteRouter = require('./routers/deleteRouter')
-const authRouter = require('./routers/authRouter')
+
+const createRouter = require('./routers/create')
+const readRouter = require('./routers/read')
+const updateRouter = require('./routers/update')
+const deleteRouter = require('./routers/delete')
+const authRouter = require('./routers/auth')
 
 require('dotenv').config();
 
@@ -21,6 +26,23 @@ const app = express()
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+
+
+app.use(
+  session({
+    secret: crypto.randomBytes(64).toString('hex'),
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: 24 * 60 * 60 * 1000 },
+  }),
+);
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use((req, res, next) => {
+  res.locals.currentUser = req.user 
+  next()
+})
 
 app.use('/', authRouter)
 app.use('/', createRouter)

@@ -3,9 +3,9 @@ const passport = require('passport')
 const router = express.Router()
 
 router.post('/log-in',  passport.authenticate('local', {
-  successRedirect: '/',
-  failureRedirect: '/',
-}), (req, res) => { res.json('logged in') })
+  successRedirect: '/yay',
+  failureRedirect: '/boo',
+}))
 
 router.get('/log-out', (req, res, next) => {
   req.logout((err) => {
