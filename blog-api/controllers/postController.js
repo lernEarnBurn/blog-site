@@ -20,3 +20,15 @@ exports.createPost = asyncHandler(async(req, res, next) => {
     }
   })
 })
+
+
+exports.deletePost = asyncHandler(async(req, res, next) => {
+  jwt.verify(req.token, process.env.SECRET_KEY, async(err, authData) => {
+    if(err){
+      res.sendStatus(403)
+    }else{
+      const deletePost = await Post.findByIdAndDelete(req.params.postId)
+      res.json('deleted post')
+    }
+  })
+})
