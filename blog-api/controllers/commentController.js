@@ -3,6 +3,8 @@ const jwt = require('jsonwebtoken')
 
 const Comment = require('../models/comment')
 
+
+//form validation
 exports.createComment = asyncHandler(async(req, res, next) => {
   jwt.verify(req.token, process.env.SECRET_KEY, async(err, authData) => {
     if(err){
