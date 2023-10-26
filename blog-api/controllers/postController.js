@@ -2,6 +2,7 @@ const asyncHandler = require('express-async-handler')
 const jwt = require('jsonwebtoken')
 
 const Post = require('../models/post')
+const Comment = require('../models/comment')
 
 
 //add form validation
@@ -28,6 +29,7 @@ exports.deletePost = asyncHandler(async(req, res, next) => {
       res.sendStatus(403)
     }else{
       const deletePost = await Post.findByIdAndDelete(req.params.postId)
+      const deletePostComments = await Comment.deleteMany({post: req.params.postId})
       res.json('deleted post')
     }
   })
