@@ -34,3 +34,28 @@ exports.deletePost = asyncHandler(async(req, res, next) => {
     }
   })
 })
+
+exports.getAllPosts = asyncHandler(async(req, res, next) => {
+  try {
+    const allPosts = await Post.find({})
+    res.json(allPosts)
+  } catch(err){
+    res.json(err)
+  }
+})
+
+exports.getPost = asyncHandler(async(req, res, next) => {
+  try {
+    const post = await Post.findById(req.params.postId)
+    const postComments = await Comment.find({post: req.params.postId})
+
+    const response = {
+      post: post,
+      postComments: postComments,
+    };
+
+    res.json(response)
+  } catch(err){
+    res.json(err)
+  }
+})
