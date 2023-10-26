@@ -59,3 +59,16 @@ exports.getPost = asyncHandler(async(req, res, next) => {
     res.json(err)
   }
 })
+
+
+//form validation
+exports.updatePost = asyncHandler(async(req, res, next) => {
+  jwt.verify(req.token, process.env.SECRET_KEY, async(err, authData) => {
+    if(err){
+      res.sendStatus(403)
+    }else{
+      const update = await Post.updateOne({_id: req.params.postId}, {$set: {title: req.body.newTitle, content: req.body.newContent} })
+      res.json('post updated')
+    }
+  })
+})
