@@ -8,12 +8,14 @@ import { SignupForm } from './components/SignupForm'
 import { BlogMenu } from './components/BlogMenu'
 import { BlogPage } from './components/BlogPage'
 
+import { ThemeProvider } from "@/components/theme-provider"
+
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(false)
 
   return (
-    <>
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <NavBar/>
       <Routes>
         <Route path="/" element={ loggedIn ? ( <Navigate to="/blogs"/> ) : ( <Navigate to="/log-in"/> ) }/> 
@@ -22,7 +24,7 @@ function App() {
         <Route path="/blogs" element={<BlogMenu/>}/>
         <Route path="/blogs/:blogId" element={<BlogPage/>}/>
       </Routes>
-    </>
+    </ThemeProvider>
   )
 }
 
