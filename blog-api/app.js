@@ -1,6 +1,7 @@
 const express = require('express')
 const mongoose = require('mongoose');
 const logger = require('morgan')
+const cors = require('cors')
 
 const createRouter = require('./routers/create')
 const readRouter = require('./routers/read')
@@ -20,6 +21,7 @@ async function main() {
 
 const app = express()
 
+app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
