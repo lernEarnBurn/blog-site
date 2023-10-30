@@ -1,19 +1,21 @@
 import axios from 'axios'
+import { useState } from 'react'
 
 import { Input } from "./ui/input"
 import { Button } from "./ui/button"
 
-type inputValue = string | null
 
 export function LoginForm(){
-  async function checkLoginCreds(): Promise<void>{
-    const emailValue: inputValue = document.querySelector('input[name="email"]').value
-    const passwordValue: inputValue = document.querySelector('input[name="password"]').value
+  const [username, setUsername] = useState('')
+  const [password, setPassword] = useState('')
 
-    if(emailValue && passwordValue){
+  async function checkLoginCreds(): Promise<void>{
+    
+
+    if(username !== '' && password !== ''){
       axios.post('http://localhost:3000/log-in', {
-        email: emailValue,
-        password: passwordValue
+        username: username,
+        password: password
       })
       .then(function (response) {
         console.log(response);
@@ -27,8 +29,8 @@ export function LoginForm(){
 
   return (
     <section>
-      <Input type="text" name="email" placeholder="Email"/>
-      <Input type="password" name="password" placeholder="Password"/>
+      <Input type="text" name="username" placeholder="Username" onChange={(e) => {setUsername(e.target.value)}}/>
+      <Input type="password" name="password" placeholder="Password" onChange={(e) => {setPassword(e.target.value)}}/>
       <Button onClick={checkLoginCreds}>Submit</Button>
     </section>
   )
