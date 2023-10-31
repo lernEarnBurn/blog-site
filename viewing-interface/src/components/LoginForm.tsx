@@ -5,12 +5,19 @@ import type { RefObject } from 'react';
 import { Input } from "./ui/input"
 import { Button } from "./ui/button"
 
+import { useNavigate } from 'react-router-dom';
 
-export function LoginForm(){
+interface loginFormProps {
+  setLoggedIn:  React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+export function LoginForm(props: loginFormProps){
   const usernameRef: RefObject<HTMLInputElement> = useRef(null);
   const passwordRef: RefObject<HTMLInputElement> = useRef(null);
 
   const [showErrorMessage, setShowErrorMessage] = useState(false)
+
+  const navigate = useNavigate();
 
   async function checkLoginCreds(): Promise<void>{
     if(usernameRef.current?.value && passwordRef.current?.value){
@@ -22,6 +29,8 @@ export function LoginForm(){
         if(response.data.token){
           localStorage.setItem('token', response.data.token)
           setShowErrorMessage(false)
+          props.setLoggedIn(true)
+          navigate('/')
         }else{
           setShowErrorMessage(true)
         }
