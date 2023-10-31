@@ -53,7 +53,7 @@ export function LoginForm(props: loginFormProps){
 
  
   return (
-    <Card>
+    <Card className='w-[25vw] h-[43vh] mx-auto translate-y-44'>
       <CardHeader>
         <CardTitle>Login</CardTitle>
       </CardHeader>
