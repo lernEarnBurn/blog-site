@@ -16,10 +16,10 @@ function App() {
 
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <NavBar/>
+      <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>
       <Routes>
         <Route path="/" element={ loggedIn ? ( <Navigate to="/blogs"/> ) : ( <Navigate to="/log-in"/> ) }/> 
-        <Route path="/log-in" element={<LoginForm/>}/>
+        <Route path="/log-in" element={<LoginForm setLoggedIn={setLoggedIn}/>}/>
         <Route path="/sign-up" element={<SignupForm/>}/>
         <Route path="/blogs" element={<BlogMenu/>}/>
         <Route path="/blogs/:blogId" element={<BlogPage/>}/>
