@@ -1,9 +1,17 @@
 import axios from 'axios'
+
 import { useRef, useState } from 'react'
 import type { RefObject } from 'react';
 
 import { Input } from "./ui/input"
 import { Button } from "./ui/button"
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "./ui/card"
 
 import { useNavigate } from 'react-router-dom';
 
@@ -28,6 +36,7 @@ export function LoginForm(props: loginFormProps){
       .then(function (response) {
         if(response.data.token){
           localStorage.setItem('token', response.data.token)
+         
           setShowErrorMessage(false)
           props.setLoggedIn(true)
           navigate('/')
@@ -42,12 +51,22 @@ export function LoginForm(props: loginFormProps){
   }
 
 
+ 
   return (
-    <section>
-      <Input ref={usernameRef} type="text" name="username" placeholder="Username"/>
-      <Input ref={passwordRef} type="password" name="password" placeholder="Password"/>
-      {showErrorMessage && <p className='error-message'>Login failed. Please check your credentials.</p>}
-      <Button onClick={checkLoginCreds}>Submit</Button>
-    </section>
+    <Card>
+      <CardHeader>
+        <CardTitle>Login</CardTitle>
+      </CardHeader>
+        <CardContent>
+          <Input ref={usernameRef} type="text" name="username" placeholder="Username"/>
+        </CardContent>
+        <CardContent>
+          <Input ref={passwordRef} type="password" name="password" placeholder="Password"/>
+          {showErrorMessage && <p className='error-message'>Login failed. Please check your credentials.</p>}
+        </CardContent>
+        <CardFooter>
+          <Button className='w-full' onClick={checkLoginCreds}>Submit</Button>
+        </CardFooter>
+    </Card>
   )
 }
