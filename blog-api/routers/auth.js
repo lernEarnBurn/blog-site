@@ -10,10 +10,11 @@ const User = require('../models/user')
 router.post('/log-in', asyncHandler(async(req, res) => {
   try {
     const user = await User.findOne({ username: req.body.username });
-    const match = await bcrypt.compare(req.body.password, user.password);
     if (!user) {
       return res.json('user not found')
     }
+
+    const match = await bcrypt.compare(req.body.password, user.password);
     if (!match) {
       return res.json('password is incorrect')
     }
