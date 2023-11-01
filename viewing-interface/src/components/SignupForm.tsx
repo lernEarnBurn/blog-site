@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import { Loader2 } from 'lucide-react';
+
 import { useRef, useState } from 'react'
 import type { RefObject } from 'react';
 
@@ -33,13 +35,16 @@ export function SignupForm(props: signUpFormProps) {
   const [showErrorMessage, setShowErrorMessage] = useState(false)
   const [errorMessage, setErrorMessage] = useState({usernameMessage: '', passwordMessage: ''})
 
+  const [loading, setLoading] = useState(false)
+
   const navigate = useNavigate();
 
-  //add loading and kill buttons in this and in login
   async function submitNewUser(): Promise<void> {
     const error = signUpValidation(usernameRef.current?.value, passwordRef.current?.value)
 
     if(error.passwordMessage === '' && error.usernameMessage === ''){
+      setLoading(true)
+
       try {
         setShowErrorMessage(false)
 
@@ -61,12 +66,15 @@ export function SignupForm(props: signUpFormProps) {
             localStorage.setItem('token', response.data.token)  
             setShowErrorMessage(false)
             props.setLoggedIn(true)
+            setLoading(false)
             navigate('/')
           }
         }else{
+          setLoading(false)
           console.log('create user failed')
         }
       } catch (err){
+        
         console.log(err)
       }
     }else{
@@ -98,7 +106,12 @@ export function SignupForm(props: signUpFormProps) {
           {showErrorMessage && <p className='mt-1 ml-1 mb-[-.5vh] error-message text-xs'>{errorMessage.passwordMessage}</p>}
         </CardContent>
         <CardContent>
-          <Button className='w-full' onClick={submitNewUser}>Submit</Button>
+          {!loading ?
+          (<Button className='w-full' onClick={submitNewUser}>Submit</Button>
+          ) : (
+          <Button disabled className='w-full'>
+            <Loader2 className='mr-2 h-4 w-4 animate-spin'/>
+          </Button> )}
         </CardContent>
         <CardFooter>
           <Link to="/log-in">Login</Link>

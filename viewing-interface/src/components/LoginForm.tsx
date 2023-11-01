@@ -1,5 +1,7 @@
 import axios from 'axios'
 
+import { Loader2 } from 'lucide-react';
+
 import { useRef, useState } from 'react'
 import type { RefObject } from 'react';
 
@@ -25,9 +27,13 @@ export function LoginForm(props: loginFormProps){
 
   const [showErrorMessage, setShowErrorMessage] = useState(false)
 
+  const [loading, setLoading] = useState(false)
+
   const navigate = useNavigate();
 
   async function checkLoginCreds(): Promise<void>{
+    setLoading(true)
+
     try {
       const response = await axios.post(
         'http://localhost:3000/log-in', {
@@ -39,8 +45,10 @@ export function LoginForm(props: loginFormProps){
         localStorage.setItem('token', response.data.token)  
         setShowErrorMessage(false)
         props.setLoggedIn(true)
+        setLoading(false)
         navigate('/')
       }else{
+        setLoading(false)
         setShowErrorMessage(true)
       }
     } catch(err){
@@ -65,7 +73,12 @@ export function LoginForm(props: loginFormProps){
             {showErrorMessage && <p className='mt-1 ml-1 mb-[-.5vh] error-message text-xs'>Username or Password is Incorrect.</p>}
           </CardContent>
           <CardContent>
-            <Button className='w-full' onClick={checkLoginCreds}>Submit</Button>
+            {!loading ?
+            (<Button className='w-full' onClick={checkLoginCreds}>Submit</Button>
+            ) : (
+            <Button disabled className='w-full'>
+              <Loader2 className='mr-2 h-4 w-4 animate-spin'/>
+            </Button> )}
           </CardContent>
           <CardFooter>
             <Link to="/sign-up">Sign Up</Link>
