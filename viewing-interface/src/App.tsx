@@ -12,8 +12,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 
 
 function App() {
-  //need a better option that a refresh doesn't ruin
-  const [loggedIn, setLoggedIn] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('token'))
 
   //maybe store the decoded jwt in a context api
 
