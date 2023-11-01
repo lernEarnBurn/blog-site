@@ -23,7 +23,7 @@ function App() {
       <Routes>
         <Route path="/" element={ loggedIn ? ( <Navigate to="/blogs"/> ) : ( <Navigate to="/log-in"/> ) }/> 
         <Route path="/log-in" element={<LoginForm setLoggedIn={setLoggedIn}/>}/>
-        <Route path="/sign-up" element={<SignupForm/>}/>
+        <Route path="/sign-up" element={<SignupForm setLoggedIn={setLoggedIn}/>}/>
         <Route path="/blogs" element={<BlogMenu/>}/>
         <Route path="/blogs/:blogId" element={<BlogPage/>}/>
       </Routes>

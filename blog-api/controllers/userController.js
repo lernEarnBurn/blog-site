@@ -15,7 +15,7 @@ exports.signUp = asyncHandler(async(req, res, next) => {
       });
 
       const result = await user.save();
-      res.json(user);
+      res.json({user: user});
     }
   });
 })
