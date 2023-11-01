@@ -1,5 +1,5 @@
 import { ModeToggle } from "./mode-toggle"
-import { useNavigate } from "react-router-dom"
+import { Link, useNavigate } from "react-router-dom"
 
 
 interface navBarProps {
@@ -24,7 +24,8 @@ export function NavBar(props: navBarProps){
       <h1>Blog Viewer</h1>
       <div className="flex items-center gap-8 mr-16">
         <ModeToggle />
-        {props.loggedIn && <a className="cursor-pointer" onClick={logOut}>Sign Out</a>}
+        {props.loggedIn && <a className="cursor-pointer w-16 text-md" onClick={logOut}>Sign Out</a>}
+        {!props.loggedIn && <Link className="cursor-pointer w-16 text-md" to='/log-in'>Log In</Link>}
       </div>
     </nav>
   )
