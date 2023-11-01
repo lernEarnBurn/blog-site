@@ -64,23 +64,24 @@ export function SignupForm(props: signUpFormProps) {
 
 
   return(
-    <Card className='w-[25vw] h-[43vh] mx-auto translate-y-44'>
-    <CardHeader>
-      <CardTitle>Sign Up</CardTitle>
-    </CardHeader>
-      <CardContent>
-        <Input ref={usernameRef} type="text" name="username" placeholder="Username" required={true}/>
-      </CardContent>
-      <CardContent>
-        <Input ref={passwordRef} type="password" name="password" placeholder="Password" required={true}/>
-        {showErrorMessage && <p className='error-message'>Login failed. Please check your credentials.</p>}
-      </CardContent>
-      <CardContent>
-        <Button className='w-full' onClick={submitNewUser}>Submit</Button>
-      </CardContent>
-      <CardFooter>
-        <Link to="/log-in">Login</Link>
-      </CardFooter>
-  </Card>
+    <div className='flex justify-center items-center h-[85vh]'>
+      <Card className='w-[25vw] mx-auto'>
+        <CardHeader>
+          <CardTitle>Sign Up</CardTitle>
+        </CardHeader>
+        <CardContent>
+          <Input ref={usernameRef} type="text" name="username" placeholder="Username"/>
+        </CardContent>
+        <CardContent>
+          <Input ref={passwordRef} type="password" name="password" placeholder="Password"/>
+        </CardContent>
+        <CardContent>
+          <Button className='w-full' onClick={submitNewUser}>Submit</Button>
+        </CardContent>
+        <CardFooter>
+          <Link to="/log-in">Login</Link>
+        </CardFooter>
+      </Card>
+    </div>
   )
 }
