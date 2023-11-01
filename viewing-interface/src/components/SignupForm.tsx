@@ -33,16 +33,16 @@ export function SignupForm(props: signUpFormProps) {
     try {
       const response = await axios.post(
         'http://localhost:3000/sign-up', {
-          username: usernameRef.current?.value,
-          password: passwordRef.current?.value
+          username: usernameRef.current?.value.trim(),
+          password: passwordRef.current?.value.trim()
       })
   
       //if it succeeds than auto login
       if(response.data.user){
         const logIn = await axios.post(
           'http://localhost:3000/log-in', {
-            username: usernameRef.current?.value,
-            password: passwordRef.current?.value
+            username: usernameRef.current?.value.trim(),
+            password: passwordRef.current?.value.trim()
         })
   
         if(logIn.data.token){

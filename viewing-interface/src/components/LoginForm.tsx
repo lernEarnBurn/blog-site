@@ -30,8 +30,8 @@ export function LoginForm(props: loginFormProps){
   async function checkLoginCreds(): Promise<void>{
     const response = await axios.post(
       'http://localhost:3000/log-in', {
-        username: usernameRef.current?.value,
-        password: passwordRef.current?.value
+        username: usernameRef.current?.value.trim(),
+        password: passwordRef.current?.value.trim()
     })
 
     if(response.data.token){
