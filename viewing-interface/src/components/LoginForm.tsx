@@ -54,14 +54,14 @@ export function LoginForm(props: loginFormProps){
     <div className='flex justify-center items-center h-[85vh]'>
       <Card className='w-[25vw] mx-auto'>
         <CardHeader>
-          <CardTitle>Login</CardTitle>
+          <CardTitle>Log In</CardTitle>
         </CardHeader>
           <CardContent>
             <Input ref={usernameRef} type="text" name="username" placeholder="Username"/>
           </CardContent>
           <CardContent>
             <Input ref={passwordRef} type="password" name="password" placeholder="Password"/>
-            {showErrorMessage && <p className='mt-3 ml-2 error-message'>Login failed. Please check your credentials.</p>}
+            {showErrorMessage && <p className='mt-3 mb-[-.5vh] error-message text-sm text-center'>Login failed. Please check your credentials.</p>}
           </CardContent>
           <CardContent>
             <Button className='w-full' onClick={checkLoginCreds}>Submit</Button>

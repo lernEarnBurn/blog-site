@@ -24,8 +24,8 @@ export function NavBar(props: navBarProps){
       <h1>Blog Viewer</h1>
       <div className="flex items-center gap-8 mr-16">
         <ModeToggle />
-        {props.loggedIn && <a className="cursor-pointer w-16 text-md" onClick={logOut}>Sign Out</a>}
-        {!props.loggedIn && <Link className="cursor-pointer w-16 text-md" to='/log-in'>Log In</Link>}
+        {props.loggedIn && <a className="cursor-pointer w-16 text-lg whitespace-nowrap" onClick={logOut}>Sign Out</a>}
+        {!props.loggedIn && <Link className="cursor-pointer w-16 text-lg" to='/log-in'>Log In</Link>}
       </div>
     </nav>
   )
