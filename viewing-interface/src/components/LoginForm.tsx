@@ -58,10 +58,11 @@ export function LoginForm(props: loginFormProps){
         </CardHeader>
           <CardContent>
             <Input ref={usernameRef} type="text" name="username" placeholder="Username"/>
+            
           </CardContent>
           <CardContent>
             <Input ref={passwordRef} type="password" name="password" placeholder="Password"/>
-            {showErrorMessage && <p className='mt-3 mb-[-.5vh] error-message text-sm text-center'>Login failed. Please check your credentials.</p>}
+            {showErrorMessage && <p className='mt-1 ml-1 mb-[-.5vh] error-message text-xs'>Username or Password is Incorrect.</p>}
           </CardContent>
           <CardContent>
             <Button className='w-full' onClick={checkLoginCreds}>Submit</Button>
