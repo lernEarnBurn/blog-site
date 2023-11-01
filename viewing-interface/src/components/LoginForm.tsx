@@ -13,7 +13,7 @@ import {
   CardTitle,
 } from "./ui/card"
 
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 interface loginFormProps {
   setLoggedIn:  React.Dispatch<React.SetStateAction<boolean>>;
@@ -28,25 +28,19 @@ export function LoginForm(props: loginFormProps){
   const navigate = useNavigate();
 
   async function checkLoginCreds(): Promise<void>{
-    if(usernameRef.current?.value && passwordRef.current?.value){
-      axios.post('http://localhost:3000/log-in', {
+    const response = await axios.post(
+      'http://localhost:3000/log-in', {
         username: usernameRef.current?.value,
         password: passwordRef.current?.value
-      })
-      .then(function (response) {
-        if(response.data.token){
-          localStorage.setItem('token', response.data.token)
-         
-          setShowErrorMessage(false)
-          props.setLoggedIn(true)
-          navigate('/')
-        }else{
-          setShowErrorMessage(true)
-        }
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+    })
+
+    if(response.data.token){
+      localStorage.setItem('token', response.data.token)  
+      setShowErrorMessage(false)
+      props.setLoggedIn(true)
+      navigate('/')
+    }else{
+      setShowErrorMessage(true)
     }
   }
 
@@ -64,8 +58,11 @@ export function LoginForm(props: loginFormProps){
           <Input ref={passwordRef} type="password" name="password" placeholder="Password"/>
           {showErrorMessage && <p className='error-message'>Login failed. Please check your credentials.</p>}
         </CardContent>
-        <CardFooter>
+        <CardContent>
           <Button className='w-full' onClick={checkLoginCreds}>Submit</Button>
+        </CardContent>
+        <CardFooter>
+          <Link to="/sign-up">Sign Up</Link>
         </CardFooter>
     </Card>
   )
