@@ -19,10 +19,13 @@ export function NavBar(props: navBarProps){
   
    
   return ( 
-    <nav className="flex gap-4 h-[10vh] w-[100vw] justify-center items-center">
-      <h1>Blog Creator</h1>
-      <ModeToggle/>
-      {props.loggedIn && <a className="cursor-pointer" onClick={logOut}>Sign Out</a>}
+    <nav className="flex justify-between items-center h-[10vh] w-[100vw] px-4 py-12 shadow-sm border-2">
+      <a className="text-2xl ml-16" href="http://localhost:5333/">Create Blogs</a>
+      <h1>Blog Viewer</h1>
+      <div className="flex items-center gap-8 mr-16">
+        <ModeToggle />
+        {props.loggedIn && <a className="cursor-pointer" onClick={logOut}>Sign Out</a>}
+      </div>
     </nav>
   )
 }
