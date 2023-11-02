@@ -19,7 +19,7 @@ export function NavBar(props: navBarProps){
   
    
   return ( 
-    <nav className="flex justify-between items-center h-[10vh] w-[100vw] px-4 py-12 shadow-sm border-2">
+    <nav className="flex fixed justify-between items-center h-[10vh] w-[100vw] px-4 py-12 shadow-sm border-2">
       <a className="text-2xl ml-16" href="http://localhost:5333/">Create Blogs</a>
       <h1>Blog Viewer</h1>
       <div className="flex items-center gap-8 mr-16">

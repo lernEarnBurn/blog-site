@@ -59,7 +59,7 @@ export function LoginForm(props: loginFormProps){
 
  
   return (
-    <div className='flex justify-center items-center h-[85vh]'>
+    <div className='flex justify-center items-center h-[90vh] w-[100vw] mt-[10vh]'>
       <Card className='w-[25vw] mx-auto'>
         <CardHeader>
           <CardTitle>Log In</CardTitle>
