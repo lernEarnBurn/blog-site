@@ -1,6 +1,8 @@
 import { ModeToggle } from "./mode-toggle"
 import { Link, useNavigate } from "react-router-dom"
 
+import { useState, useEffect } from "react"
+
 
 interface navBarProps {
   loggedIn: boolean,
@@ -16,10 +18,28 @@ export function NavBar(props: navBarProps){
     navigate('/')
   }
 
+  const [scrolledDown, setScrolledDown] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (window.scrollY > 0 && !scrolledDown) {
+        setScrolledDown(true);
+      } else if (window.scrollY === 0 && scrolledDown) {
+        setScrolledDown(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [scrolledDown]);
+
   
    
   return ( 
-    <nav className="flex fixed justify-between items-center h-[10vh] w-[100vw] px-4 py-12 shadow-sm border-2">
+    <nav className={`flex fixed justify-between items-center h-[10vh] w-[100vw] px-4 py-12 shadow-sm border-2 transition-transform duration-300 ease-in-out transform ${scrolledDown ? '-translate-y-full' : 'translate-y-0'}`}>
       <a className="text-2xl ml-16" href="http://localhost:5333/">Create Blogs</a>
       <h1>Blog Viewer</h1>
       <div className="flex items-center gap-8 mr-16">

@@ -30,7 +30,7 @@ export function BlogMenu() {
     <>
       <div className="mt-[17vh] mb-[4vh] flex flex-col gap-4 overflow-y-auto h-auto min-w-[99vw] items-center">
         {blogs.map((blog) => {
-          return <div className="rounded-lg dark:bg-opacity-90 mt-[3vh] py-2 px-3 border-2 light:border-black shadow-sm w-[40vw] h-[80vh] overflow-hidden" key={blog._id}>
+          return <div className="rounded-lg dark:bg-opacity-90 mt-[3vh] py-2 px-3 border-2 light:border-black shadow-sm w-[35vw] h-[80vh] overflow-hidden" key={blog._id}>
                     <h2 className="text-center text-2xl"><strong>{blog.title}</strong></h2>
                     <p className="mt-2 text-md">{blog.content}</p>
                  </div>

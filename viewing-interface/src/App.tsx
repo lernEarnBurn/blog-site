@@ -14,6 +14,7 @@ import { ThemeProvider } from "@/components/theme-provider"
 function App() {
   const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('token'))
 
+
   //maybe store the decoded jwt in a context api
 
   //might want to have the / direct to BlogMenu even if not logged in because most of app is ok without login
