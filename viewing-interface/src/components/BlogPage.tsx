@@ -1,5 +1,11 @@
+import { useParams } from "react-router-dom";
+
 export function BlogPage() {
+  const { blogId } = useParams();
+
   return (
-    <>Specific blog page</>
+    <>
+      <p className="mt-[50vh]">{blogId}</p>
+    </>
   )
 }
