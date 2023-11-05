@@ -37,7 +37,7 @@ exports.deletePost = asyncHandler(async(req, res, next) => {
 
 exports.getAllPosts = asyncHandler(async(req, res, next) => {
   try {
-    const allPosts = await Post.find({})
+    const allPosts = await Post.find({}).populate('author').exec()
     res.json(allPosts)
   } catch(err){
     res.json(err)

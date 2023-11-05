@@ -2,11 +2,19 @@ import { useEffect, useState, useRef } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
 
+import { Skeleton } from "./ui/skeleton";
+
 interface Blog {
   _id: string;
-  author: string;
+  author: User;
   content: string;
   title: string;
+}
+
+interface User {
+  _id: string;
+  username: string;
+  password: string;
 }
 
 export function BlogMenu() {
@@ -56,6 +64,7 @@ export function BlogMenu() {
                     className=" z-10 rounded-lg dark:bg-opacity-90 mt-[4.5vh] py-2 px-3 border-2 light:border-black shadow-sm w-[35vw] h-[87vh] overflow-hidden" 
                     key={blog._id}>
                     <h2 className="text-center text-2xl"><strong>{blog.title}</strong></h2>
+                    <h3 className="text-center text-md">By {blog.author && blog.author.username ? blog.author.username : 'changeWhenCanCreateBlogs'}</h3>
                     <p className="mt-2 text-md">{blog.content}</p>
                  </div>
         })}
