@@ -54,7 +54,7 @@ export function BlogMenu() {
    
     setTimeout(() => {
       navigate(`/blogs/${blog._id}`);
-    }, 400);
+    }, 350);
   }
 
 
