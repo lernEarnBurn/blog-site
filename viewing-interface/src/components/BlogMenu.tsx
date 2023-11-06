@@ -49,11 +49,12 @@ export function BlogMenu() {
     if (itemsRef.current && itemsRef.current[index]) {
       itemsRef.current[index]?.scrollIntoView({ behavior: "smooth",  block: "center" });
     }
+
+    localStorage.setItem('selectedBlog', JSON.stringify(blog))
    
-    
     setTimeout(() => {
       navigate(`/blogs/${blog._id}`);
-    }, 500);
+    }, 400);
   }
 
 
