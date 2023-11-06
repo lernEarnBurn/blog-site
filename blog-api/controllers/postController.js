@@ -44,9 +44,10 @@ exports.getAllPosts = asyncHandler(async(req, res, next) => {
   }
 })
 
+//may not use this
 exports.getPost = asyncHandler(async(req, res, next) => {
   try {
-    const post = await Post.findById(req.params.postId)
+    const post = await Post.findById(req.params.postId).populate('author').exec()
     const postComments = await Comment.find({post: req.params.postId})
 
     const response = {
