@@ -15,6 +15,11 @@
   -webkit-text-size-adjust: 100%;
 }
 
+.btn-bar {
+  background-color: #646cffb5;
+
+}
+
 
 .error-message {
   color: #646cff;
