@@ -20,6 +20,10 @@
 
 }
 
+.icon {
+  color: hsl(var(--background));
+}
+
 
 .error-message {
   color: #646cff;
