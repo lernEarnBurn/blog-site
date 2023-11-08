@@ -1,6 +1,7 @@
 import { PageAnimation } from "./PageAnimation";
 import { BtnBar } from './BackBar';
 
+import { useRef } from "react";
 import { useNavigate } from 'react-router-dom';
 
 export function BlogPage() {
@@ -16,8 +17,18 @@ export function BlogPage() {
     navigate(-1); 
   }
 
+
+  const sectionRef = useRef<HTMLDivElement | null>(null);
+  
+  const toComments = () => {
+    if(sectionRef && sectionRef.current){
+      sectionRef.current.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+  
+
   return (
-    <div className="overflow-y-scroll h-[100.1vh] snap-y snap-mandatory">
+    <div className="scroller overflow-y-scroll h-[100.01vh] snap-y snap-mandatory">
       <section className="h-[100vh] w-[100vw] grid place-items-center snap-start">
         <PageAnimation>
             <div className="flex flex-col gap-4 z-10 rounded-lg dark:bg-opacity-90 py-2 px-10 border-2 light:border-black shadow-sm w-[35vw] h-[87vh] overflow-hidden">
@@ -29,10 +40,10 @@ export function BlogPage() {
               </h3>
               <p className="mt-2 text-md">{blogData?.content || 'No Content'}</p>
             </div>
-           <BtnBar backFunc={handleGoBack}></BtnBar>
+           <BtnBar backFunc={handleGoBack} toCommentsFunc={toComments}></BtnBar>
         </PageAnimation>
       </section>
-      <section className="grid place-items-center h-[100vh] snap-start ">
+      <section ref={sectionRef} className="grid place-items-center h-[100vh] snap-start ">
         <p>Comment Section</p>
       </section>
     </div>
