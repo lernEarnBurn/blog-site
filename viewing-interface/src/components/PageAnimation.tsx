@@ -13,14 +13,14 @@ const animations = {
 
 export const PageAnimation = ({children}: PageAnimationProps) => {
   return (
-    <motion.div
-      variants={animations}
-      initial="initial"
-      animate="animate"
-      exit="exit"
-      transition={{duration: 0.15, type: "tween", ease: "easeInOut"}}
-      >
-      {children}
-    </motion.div>
+      <motion.div
+        variants={animations}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+        transition={{duration: 0.15, type: "tween", ease: "easeInOut"}}
+        >
+        {children}
+      </motion.div>
   )
 }

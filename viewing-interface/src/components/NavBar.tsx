@@ -21,7 +21,10 @@ export function NavBar(props: navBarProps){
 
   const [scrolledDown, setScrolledDown] = useState(false);
 
+  //need to have this hidden for when the animation fades out
+
   useEffect(() => {
+   
     const handleScroll = () => {
       if (window.scrollY > 0 && !scrolledDown) {
         setScrolledDown(true);
@@ -43,8 +46,7 @@ export function NavBar(props: navBarProps){
   if(location.pathname.includes('/blogs/')){
     return null
   }
- 
-
+  
   
    
   return ( 

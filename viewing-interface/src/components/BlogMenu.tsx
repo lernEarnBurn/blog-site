@@ -23,33 +23,42 @@ export function BlogMenu() {
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    const getAllBlogs = async() =>{
-      setLoading(true)
-      try {
-        const response = await axios.get('http://localhost:3000/posts')
-        setBlogs(response.data)
-        setLoading(false)
-      } catch(err){
-        console.log(err)
+    const getAllBlogs = async () => {
+      const storedBlogs = localStorage.getItem('allBlogs');
+  
+      if (storedBlogs) {
+        setBlogs(JSON.parse(storedBlogs));
+      } else {
+        try {
+          setLoading(true);
+          const response = await axios.get('http://localhost:3000/posts');
+          setBlogs(response.data);
+          setLoading(false);
+        } catch (err) {
+          console.log(err);
+        }
       }
-    }
-
-    getAllBlogs()
-  }, [])
+    };
+  
+    getAllBlogs();
+  }, []);  
   
   
   const navigate = useNavigate()
   const itemsRef = useRef<Array<HTMLDivElement | null>>([])
-
+  //to catch up the itemsRef 
   useEffect(() => {
     itemsRef.current = itemsRef.current.slice(0, blogs.length);
  }, [blogs]);
+
+
 
   function transitionToBlogPage(blog: Blog, index: number): void{
     if (itemsRef.current && itemsRef.current[index]) {
       itemsRef.current[index]?.scrollIntoView({ behavior: "smooth",  block: "center" });
     }
 
+    localStorage.setItem('allBlogs', JSON.stringify(blogs))
     localStorage.setItem('selectedBlog', JSON.stringify(blog))
    
     setTimeout(() => {
@@ -60,7 +69,7 @@ export function BlogMenu() {
 
   return (
      <>
-      <div className="mt-[13vh] mb-[4vh] flex flex-col gap-4 overflow-y-auto h-auto min-w-[99vw] items-center">
+      <div className="relative top-24 flex flex-col gap-4 overflow-y-auto h-auto min-w-[99vw] items-center">
         {!loading ? (
           blogs.map((blog, index) => (
             <div
