@@ -1,14 +1,10 @@
 import { PageAnimation } from "./PageAnimation";
 import { BtnBar } from './BackBar';
 
-import { useEffect } from "react";
-
 import { useNavigate } from 'react-router-dom';
 
 export function BlogPage() {
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+  
 
   //this is done to ensure to ensure a clean transition and avoid another query
   const storedBlogData = localStorage.getItem('selectedBlog');
@@ -21,7 +17,7 @@ export function BlogPage() {
   }
 
   return (
-    <div className="overflow-y-scroll h-[101vh] snap-y snap-mandatory">
+    <div className="overflow-y-scroll h-[100.1vh] snap-y snap-mandatory">
       <section className="h-[100vh] w-[100vw] grid place-items-center snap-start">
         <PageAnimation>
             <div className="flex flex-col gap-4 z-10 rounded-lg dark:bg-opacity-90 py-2 px-10 border-2 light:border-black shadow-sm w-[35vw] h-[87vh] overflow-hidden">
