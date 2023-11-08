@@ -14,7 +14,6 @@ const animations = {
 export const PageAnimation = ({children}: PageAnimationProps) => {
   return (
     <motion.div
-      className='relative top-4'
       variants={animations}
       initial="initial"
       animate="animate"

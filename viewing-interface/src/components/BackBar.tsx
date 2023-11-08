@@ -16,16 +16,22 @@ interface BtnBarProps {
 export const BtnBar = ({backFunc}: BtnBarProps) => {
   return (
     <motion.div
-      className='absolute top-[5vh] left-[25.5vw] flex flex-col gap-1' 
+      className='absolute top-0 left-[-5.3vw] flex flex-col gap-1 whitespace-nowrap w-fit' 
       variants={animations}
       initial="initial"
       animate="animate"
       exit="exit"
 
       >
-      <button className='w-20 h-20 btn-bar hover:scale-[1.004] flex items-center justify-center' onClick={backFunc}><ArrowLeftFromLine className='icon w-20 h-16'/></button>
-      <button className='w-20 h-20 btn-bar hover:scale-[1.004] flex items-center justify-center'><MessageCircle className='icon w-20 h-16'/></button>
-      <button className='w-20 h-20 btn-bar hover:scale-[1.004] flex items-center justify-center'><Share className='icon w-20 h-16'/></button>
+      <button className='w-16 h-16 btn-bar hover:scale-[1.01] flex items-center justify-center' onClick={backFunc}>
+        <ArrowLeftFromLine className='icon'/>
+      </button>
+      <button className='w-16 h-16 btn-bar hover:scale-[1.01] flex items-center justify-center'>
+        <MessageCircle className='icon'/>
+      </button>
+      <button className='w-16 h-16 btn-bar hover:scale-[1.01] flex items-center justify-center'>
+        <Share className='icon'/>
+      </button>
     </motion.div>
    
   )
