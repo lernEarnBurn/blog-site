@@ -25,6 +25,14 @@
   color: hsl(var(--background));
 }
 
+.comment-title {
+  color: #646cff;
+
+}
+
+.comment-button {
+  background-color: #646cff;
+}
 
 .error-message {
   color: #646cff;

@@ -1,5 +1,6 @@
 import { PageAnimation } from "./PageAnimation";
 import { BtnBar } from './BackBar';
+import { CommentSection } from "./CommentSection";
 
 import { useRef } from "react";
 import { useNavigate } from 'react-router-dom';
@@ -45,7 +46,7 @@ export function BlogPage() {
         </PageAnimation>
       </section>
       <section ref={sectionRef} className="grid place-items-center h-[100vh] snap-start ">
-        <p>Comment Section</p>
+        <CommentSection/>
       </section>
     </div>
   ) 
