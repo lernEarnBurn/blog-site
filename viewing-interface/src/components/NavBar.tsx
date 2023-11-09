@@ -18,7 +18,8 @@ export function NavBar(props: navBarProps){
     props.setLoggedIn(false)
     navigate('/')
   }
-
+  
+  
   const [scrolledDown, setScrolledDown] = useState(false);
 
   //need to have this hidden for when the animation fades out
@@ -44,11 +45,11 @@ export function NavBar(props: navBarProps){
   const location = useLocation()
 
   if(location.pathname.includes('/blogs/')){
+    
     return null
   }
   
-  
-   
+    
   return ( 
     <nav className={`z-20 flex fixed justify-between items-center h-[10vh] w-[100vw] px-4 py-12 shadow-sm border-2 transition-transform duration-300 ease-in-out transform ${scrolledDown ? '-translate-y-full' : 'translate-y-0'}`}>
       <a className="text-2xl ml-16" href="http://localhost:5333/">Create Blogs</a>

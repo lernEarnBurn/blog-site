@@ -12,7 +12,6 @@ export function BlogPage() {
 
   const navigate  = useNavigate()
   
-
   //needs some work
   const handleGoBack = () => {
     navigate(-1);
@@ -27,13 +26,12 @@ export function BlogPage() {
     }
   }
   
-
   return (
     <div className="scroller overflow-y-scroll h-[100.01vh] snap-y snap-mandatory">
       <section className="h-[100vh] w-[100vw] grid place-items-center snap-start">
         <PageAnimation>
 
-            <div className="flex flex-col gap-4 z-10 rounded-lg dark:bg-opacity-90 py-2 px-10 border-2 light:border-black shadow-sm w-[35vw] h-[87vh] overflow-hidden">
+            <div className="flex flex-col  z-10 rounded-lg dark:bg-opacity-90 py-2 px-10 border-2 light:border-black shadow-sm w-[35vw] h-[87vh] overflow-hidden">
               <h2 className="text-center text-2xl">
                 <strong>{blogData?.title || 'No Title'}</strong>
               </h2>

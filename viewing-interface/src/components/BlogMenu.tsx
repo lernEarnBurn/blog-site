@@ -58,7 +58,10 @@ export function BlogMenu() {
       itemsRef.current[index]?.scrollIntoView({ behavior: "smooth",  block: "center" });
     }
 
-    localStorage.setItem('allBlogs', JSON.stringify(blogs))
+   
+    const updatedBlogs = [blog, ...blogs.slice(0, index), ...blogs.slice(index + 1)];
+
+    localStorage.setItem('allBlogs', JSON.stringify(updatedBlogs))
     localStorage.setItem('selectedBlog', JSON.stringify(blog))
    
     setTimeout(() => {
