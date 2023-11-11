@@ -1,4 +1,5 @@
 import axios from "axios"
+import { useState, useEffect } from "react"
 
 import { Comment } from "./ui/comment"
 import { Card, CardContent, CardTitle, CardFooter } from "./ui/card"
@@ -8,7 +9,24 @@ import { Send } from "lucide-react"
 
 
 export function CommentSection(){
-  
+  const [loading, setLoading] = useState(false)
+  //make a type called comments and then quary
+  const [comments, setComments] = useState([])
+
+  useEffect(() => {
+    const getAllComments = async () => { 
+      try {
+        setLoading(true);
+        const response = await axios.get('http://localhost:3000/posts/:postId/comments');
+        setComments(response.data);
+        setLoading(false);
+      } catch (err) {
+       console.log(err);
+     }
+  }
+
+    getAllComments();
+  }, []);  
 
   return (
     <>
