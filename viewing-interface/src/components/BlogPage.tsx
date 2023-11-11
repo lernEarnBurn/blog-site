@@ -13,7 +13,6 @@ export function BlogPage() {
 
   const navigate  = useNavigate()
   
-  //needs some work
   const handleGoBack = () => {
     navigate(-1);
   }
