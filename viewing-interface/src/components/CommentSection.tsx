@@ -14,7 +14,10 @@ export function CommentSection(){
     <>
       <Card className="w-[30vw] h-[75vh] py-2 flex flex-col">
         <CardTitle className="comment-title text-center mt-3 mb-2">Comments</CardTitle>
-        <CardContent className="w-full h-[55vh]">
+        <CardContent className="w-full h-[55vh] flex flex-col items-center overflow-y-scroll overflow-x-hidden">
+          <Comment author="moshe" content="aodnfainfios" />
+          <Comment author="moshe" content="aodnfainfios" />
+          <Comment author="moshe" content="aodnfainfios" />
           <Comment author="moshe" content="aodnfainfios" />
         </CardContent>
         <CardFooter className="flex gap-2 items-center justify-center border-t">
