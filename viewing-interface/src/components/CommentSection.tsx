@@ -11,10 +11,17 @@ interface CommentSectionProps {
   postId: string
 }
 
+type Comment = {
+  id: string;
+  author: string;
+  post: string;
+  content: string;
+};
+
 export function CommentSection(props: CommentSectionProps){
   const [loading, setLoading] = useState(false)
   //make a type called comments and then quary
-  const [comments, setComments] = useState([])
+  const [comments, setComments] = useState<Comment[]>([])
 
   
   useEffect(() => {
@@ -24,13 +31,14 @@ export function CommentSection(props: CommentSectionProps){
         const response = await axios.get(`http://localhost:3000/posts/${props.postId}/comments`)
         setComments(response.data);
         setLoading(false);
+        console.log(comments)
       } catch (err) {
        console.log(err);
      }
   }
 
     getAllComments();
-  }, [props.postId]);  
+  }, [props.postId, comments]);  
   
   return (
     <>
