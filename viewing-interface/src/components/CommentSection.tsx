@@ -38,7 +38,8 @@ export function CommentSection(props: CommentSectionProps){
   }
 
     getAllComments();
-  }, [props.postId, comments]);  
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.postId]);  
   
   return (
     <>
