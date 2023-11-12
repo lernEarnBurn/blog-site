@@ -44,24 +44,6 @@ exports.getAllPosts = asyncHandler(async(req, res, next) => {
   }
 })
 
-//may not use this
-exports.getPost = asyncHandler(async(req, res, next) => {
-  try {
-    const post = await Post.findById(req.params.postId).populate('author').exec()
-    const postComments = await Comment.find({post: req.params.postId})
-
-    const response = {
-      post: post,
-      postComments: postComments,
-    };
-
-    res.json(response)
-  } catch(err){
-    res.json(err)
-  }
-})
-
-
 //form validation
 exports.updatePost = asyncHandler(async(req, res, next) => {
   jwt.verify(req.token, process.env.SECRET_KEY, async(err, authData) => {
