@@ -23,7 +23,7 @@ exports.createComment = asyncHandler(async(req, res, next) => {
 
 exports.getPostComments = asyncHandler(async(req, res, next) => {
   try {
-    const allComments = await Comment.find({post: req.body.blogId}).exec()
+    const allComments = await Comment.find({post: req.params.postId}).exec()
     res.json(allComments)
   } catch(err){
     res.json(err)

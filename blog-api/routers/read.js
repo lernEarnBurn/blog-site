@@ -6,8 +6,6 @@ const commentController = require('../controllers/commentController')
 
 router.get('/posts', postController.getAllPosts)
 
-router.get('/posts/:postId', postController.getPost)
-
 router.get('/posts/:postId/comments', commentController.getPostComments)
 
 
