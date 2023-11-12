@@ -30,7 +30,7 @@ function App() {
           <Route path="/log-in" element={<LoginForm setLoggedIn={setLoggedIn}/>}/>
           <Route path="/sign-up" element={<SignupForm setLoggedIn={setLoggedIn}/>}/>
           <Route path="/blogs" element={<BlogMenu/>}/>
-          <Route path="/blogs/:blogId" element={<BlogPage/>}/>
+          <Route path="/blogs/:postId" element={<BlogPage/>}/>
         </Routes>
       </AnimatePresence>
     </ThemeProvider>

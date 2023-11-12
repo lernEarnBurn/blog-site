@@ -19,7 +19,7 @@ export function Comment({ author, content }: CommentProps) {
       initial="initial"
       animate="animate"
       exit="exit"
-      transition={{duration: 3, type: "tween", ease: "easeInOut"}}
+      transition={{duration: 4, type: "tween", ease: "easeInOut"}}
       >
       <h1 className="text-lg">{author}</h1>
       <h2 className="text-md">{content}</h2>

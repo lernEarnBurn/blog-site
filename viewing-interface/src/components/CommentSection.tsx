@@ -7,17 +7,21 @@ import { Input } from "./ui/input"
 import { Button } from "./ui/button"
 import { Send } from "lucide-react"
 
+interface CommentSectionProps {
+  postId: string
+}
 
-export function CommentSection(){
+export function CommentSection(props: CommentSectionProps){
   const [loading, setLoading] = useState(false)
   //make a type called comments and then quary
   const [comments, setComments] = useState([])
 
+  
   useEffect(() => {
     const getAllComments = async () => { 
       try {
         setLoading(true);
-        const response = await axios.get('http://localhost:3000/posts/:postId/comments');
+        const response = await axios.get(`http://localhost:3000/posts/${props.postId}/comments`)
         setComments(response.data);
         setLoading(false);
       } catch (err) {
@@ -26,8 +30,8 @@ export function CommentSection(){
   }
 
     getAllComments();
-  }, []);  
-
+  }, [props.postId]);  
+  
   return (
     <>
       <Card className="w-[30vw] h-[75vh] py-2 flex flex-col">
