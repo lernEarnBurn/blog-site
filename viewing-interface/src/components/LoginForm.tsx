@@ -81,8 +81,9 @@ export function LoginForm(props: loginFormProps){
               <Loader2 className='mr-2 h-4 w-4 animate-spin'/>
             </Button> )}
           </CardContent>
-          <CardFooter>
+          <CardFooter className='flex justify-between'>
             <Link to="/sign-up">Sign Up</Link>
+            <Link to="/blogs">Skip Login</Link>
           </CardFooter>
       </Card>
     </div>

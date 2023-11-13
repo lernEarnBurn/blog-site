@@ -18,9 +18,6 @@ function App() {
 
   const location = useLocation()
 
-  //maybe store the decoded jwt in a context api
-
-  //might want to have the / direct to BlogMenu even if not logged in because most of app is ok without login
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <NavBar loggedIn={loggedIn} setLoggedIn={setLoggedIn}/>

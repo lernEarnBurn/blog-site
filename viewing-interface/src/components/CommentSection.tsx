@@ -1,5 +1,6 @@
 import axios from "axios"
 
+import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react"
 import type { RefObject } from 'react';
 
@@ -50,6 +51,7 @@ export function CommentSection(props: CommentSectionProps){
 
 
   const contentRef: RefObject<HTMLInputElement> = useRef(null);
+  const navigate = useNavigate()
 
   async function createComment(){
     if(localStorage.getItem('token') && contentRef.current?.value.trim() !== "" && contentRef.current?.value){
@@ -71,7 +73,6 @@ export function CommentSection(props: CommentSectionProps){
 
         const newComment: Comment = {
           id: 'sdabidusbadiubsudadbisdbusa',
-          //this will be the users id 
           author: {_id: '', username: localStorage.getItem('username'), password: ''},
           post: props.postId,
           content: contentRef.current?.value.trim() || "",
@@ -83,6 +84,8 @@ export function CommentSection(props: CommentSectionProps){
       } catch (err){
         console.log(err)
       }
+    }else{
+      navigate('/')
     }
   }
   
@@ -95,16 +98,17 @@ export function CommentSection(props: CommentSectionProps){
             <Comment key={index} author={comment.author.username} content={comment.content}/>
           ))}
         </CardContent>
-        <CardFooter className="flex gap-2 items-center justify-center border-t">
+        <CardFooter className="flex gap-3 items-center justify-center border-t">
           <Input ref={contentRef} className="mt-8"  type="text" placeholder="Add a comment..."/>
           {!loading ? ( <Button onClick={createComment} size="icon" className=" mt-8 rounded-full h-9 w-9 comment-button hover:scale-[1.03]">
                           <Send className="icon"/>
                         </Button>) 
                         : 
                       ( <Button disabled onClick={createComment} size="icon" className=" mt-8 rounded-full h-9 w-9 comment-button hover:scale-[1.03]">
+                    
                           <Send className="icon"/>
                         </Button>
-
+                        //fix icon 
           )}
         </CardFooter>
       </Card>
