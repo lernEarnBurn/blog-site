@@ -1,5 +1,8 @@
 import axios from "axios"
-import { useState, useEffect } from "react"
+import jwt from 'jsonwebtoken'
+
+import { useState, useEffect, useRef } from "react"
+import type { RefObject } from 'react';
 
 import { Comment } from "./ui/comment"
 import { Card, CardContent, CardTitle, CardFooter } from "./ui/card"
@@ -11,16 +14,23 @@ interface CommentSectionProps {
   postId: string
 }
 
+interface User {
+  _id: string;
+  username: string;
+  password: string;
+}
+
 type Comment = {
   id: string;
-  author: string;
+  author: User;
   post: string;
   content: string;
 };
 
+//need to get username in beggining of logout and store it in localStorage
+//need comments to transition on and figure out loading
 export function CommentSection(props: CommentSectionProps){
   const [loading, setLoading] = useState(false)
-  //make a type called comments and then quary
   const [comments, setComments] = useState<Comment[]>([])
 
   
@@ -40,22 +50,64 @@ export function CommentSection(props: CommentSectionProps){
     getAllComments();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.postId]);  
+
+
+  const contentRef: RefObject<HTMLInputElement> = useRef(null);
+
+  async function createComment(){
+    if(localStorage.getItem('token') && contentRef.current?.value.trim() !== "" && contentRef.current?.value){
+      try {
+        setLoading(true)
+        const config =  { headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
+        } }
+
+        const data = {
+          author: localStorage.getItem('username') || 'moshe',
+          post: props.postId,
+          content: contentRef.current?.value.trim() || "",
+        };
+
+        const response = await axios.post(`http://localhost:3000/posts/${props.postId}/comments`, data, config)
+        setLoading(false)
+
+        const newComment = {
+          id: 'sdabidusbadiubsudadbisdbusa',
+          author: localStorage.getItem('username') || 'moshe',
+          post: props.postId,
+          content: contentRef.current?.value.trim() || "",
+        }
+        setComments((prevComments: Comment[]) => [...prevComments, newComment])
+        contentRef.current.value = ""
+
+
+      } catch (err){
+        console.log(err)
+      }
+    }
+  }
   
   return (
     <>
       <Card className="w-[30vw] h-[75vh] py-2 flex flex-col">
         <CardTitle className="comment-title text-center mt-3 mb-2">Comments</CardTitle>
         <CardContent className="w-full h-[55vh] flex flex-col items-center overflow-y-scroll overflow-x-hidden">
-          <Comment author="moshe" content="aodnfainfios" />
-          <Comment author="moshe" content="aodnfainfios" />
-          <Comment author="moshe" content="aodnfainfios" />
-          <Comment author="moshe" content="aodnfainfios" />
+          {comments.map((comment, index) => (
+            <Comment key={index} author={comment.author.username} content={comment.content}/>
+          ))}
         </CardContent>
         <CardFooter className="flex gap-2 items-center justify-center border-t">
-          <Input className="mt-8"  type="text" placeholder="Add a comment..."/>
-          <Button size="icon" className=" mt-8 rounded-full h-9 w-9 comment-button hover:scale-[1.03]">
-            <Send className="icon"/>
-          </Button>
+          <Input ref={contentRef} className="mt-8"  type="text" placeholder="Add a comment..."/>
+          {!loading ? ( <Button onClick={createComment} size="icon" className=" mt-8 rounded-full h-9 w-9 comment-button hover:scale-[1.03]">
+                          <Send className="icon"/>
+                        </Button>) 
+                        : 
+                      ( <Button disabled onClick={createComment} size="icon" className=" mt-8 rounded-full h-9 w-9 comment-button hover:scale-[1.03]">
+                          <Send className="icon"/>
+                        </Button>
+
+          )}
         </CardFooter>
       </Card>
     </>

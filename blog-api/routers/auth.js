@@ -19,7 +19,7 @@ router.post('/log-in', asyncHandler(async(req, res) => {
       return res.json('password is incorrect')
     }
 
-    const token = jwt.sign({ user: user }, process.env.SECRET_KEY, {expiresIn: '1h'}, { algorithm: 'HS256' });
+    const token = jwt.sign({ user: user }, process.env.SECRET_KEY, {expiresIn: '12h'}, { algorithm: 'HS256' });
     res.json({token: token})
   } catch(err){
     console.log(err)
