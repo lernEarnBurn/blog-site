@@ -1,5 +1,4 @@
 import axios from "axios"
-import jwt from 'jsonwebtoken'
 
 import { useState, useEffect, useRef } from "react"
 import type { RefObject } from 'react';
@@ -27,8 +26,6 @@ type Comment = {
   content: string;
 };
 
-//need to get username in beggining of logout and store it in localStorage
-//need comments to transition on and figure out loading
 export function CommentSection(props: CommentSectionProps){
   const [loading, setLoading] = useState(false)
   const [comments, setComments] = useState<Comment[]>([])
@@ -64,7 +61,7 @@ export function CommentSection(props: CommentSectionProps){
         } }
 
         const data = {
-          author: localStorage.getItem('username') || 'moshe',
+          author: localStorage.getItem('username'),
           post: props.postId,
           content: contentRef.current?.value.trim() || "",
         };
@@ -72,9 +69,10 @@ export function CommentSection(props: CommentSectionProps){
         const response = await axios.post(`http://localhost:3000/posts/${props.postId}/comments`, data, config)
         setLoading(false)
 
-        const newComment = {
+        const newComment: Comment = {
           id: 'sdabidusbadiubsudadbisdbusa',
-          author: localStorage.getItem('username') || 'moshe',
+          //this will be the users id 
+          author: {_id: '', username: localStorage.getItem('username'), password: ''},
           post: props.postId,
           content: contentRef.current?.value.trim() || "",
         }

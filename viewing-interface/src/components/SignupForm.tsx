@@ -63,7 +63,8 @@ export function SignupForm(props: signUpFormProps) {
           })
         
           if(logIn.data.token){
-            localStorage.setItem('token', response.data.token)  
+            localStorage.setItem('token', logIn.data.token)  
+            localStorage.setItem('username', logIn.data.username)  
             setShowErrorMessage(false)
             props.setLoggedIn(true)
             setLoading(false)

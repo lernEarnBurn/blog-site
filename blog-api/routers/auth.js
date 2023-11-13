@@ -20,7 +20,7 @@ router.post('/log-in', asyncHandler(async(req, res) => {
     }
 
     const token = jwt.sign({ user: user }, process.env.SECRET_KEY, {expiresIn: '12h'}, { algorithm: 'HS256' });
-    res.json({token: token})
+    res.json({token: token, username: req.body.username})
   } catch(err){
     console.log(err)
   }

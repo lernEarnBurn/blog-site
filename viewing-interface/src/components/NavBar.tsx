@@ -17,6 +17,7 @@ export function NavBar(props: navBarProps){
     localStorage.removeItem('token')
     localStorage.removeItem('allBlogs')
     localStorage.removeItem('selectedBlog')
+    localStorage.removeItem('username')
     props.setLoggedIn(false)
     navigate('/')
   }
