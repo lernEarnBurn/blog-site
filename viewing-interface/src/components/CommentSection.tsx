@@ -8,7 +8,7 @@ import { Comment } from "./ui/comment"
 import { Card, CardContent, CardTitle, CardFooter } from "./ui/card"
 import { Input } from "./ui/input"
 import { Button } from "./ui/button"
-import { Send } from "lucide-react"
+import { SendHorizontal } from "lucide-react"
 
 interface CommentSectionProps {
   postId: string
@@ -100,15 +100,13 @@ export function CommentSection(props: CommentSectionProps){
         </CardContent>
         <CardFooter className="flex gap-3 items-center justify-center border-t">
           <Input ref={contentRef} className="mt-8"  type="text" placeholder="Add a comment..."/>
-          {!loading ? ( <Button onClick={createComment} size="icon" className=" mt-8 rounded-full h-9 w-9 comment-button hover:scale-[1.03]">
-                          <Send className="icon"/>
+          {!loading ? ( <Button onClick={createComment} size="icon" className="p-0 m-0 mt-8 rounded-full h-9 w-10 comment-button hover:scale-[1.03] grid place-items-center">
+                          <SendHorizontal className="icon h-[2.5vh] w-[2.5vw]"/>
                         </Button>) 
                         : 
-                      ( <Button disabled onClick={createComment} size="icon" className=" mt-8 rounded-full h-9 w-9 comment-button hover:scale-[1.03]">
-                    
-                          <Send className="icon"/>
-                        </Button>
-                        //fix icon 
+                      ( <Button disabled className="p-0 m-0 mt-8 rounded-full h-9 w-10 comment-button hover:scale-[1.03] grid place-items-center">
+                          <SendHorizontal className="icon  h-[2.5vh] w-[2.5vw]"/>
+                        </Button> 
           )}
         </CardFooter>
       </Card>
