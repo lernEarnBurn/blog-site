@@ -18,7 +18,7 @@ export const PageAnimation = ({children}: PageAnimationProps) => {
         initial="initial"
         animate="animate"
         exit="exit"
-        transition={{duration: 0.15, type: "tween", ease: "easeInOut"}}
+        transition={{duration: 0.25, type: "tween", ease: "easeInOut"}}
         >
         {children}
       </motion.div>
