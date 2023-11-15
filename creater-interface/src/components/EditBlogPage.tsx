@@ -1,12 +1,11 @@
 import { PageAnimation } from "./PageAnimation";
 import { BtnBar } from './BackBar';
-import { CommentSection } from "./CommentSection";
 
 import { useRef } from "react";
 import { useNavigate, useParams } from 'react-router-dom';
 
 export function EditBlogPage() {
-  const postId: string = useParams().postId || ""
+  //const postId: string = useParams().postId || ""
 
 
   //this is done to ensure to ensure a clean transition and avoid another query
@@ -45,7 +44,6 @@ export function EditBlogPage() {
         </PageAnimation>
       </section>
       <section ref={sectionRef} className="grid place-items-center h-[100vh] snap-start ">
-        <CommentSection postId={postId}/>
       </section>
     </div>
   ) 
