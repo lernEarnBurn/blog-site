@@ -1,12 +1,10 @@
 import { PageAnimation } from "./PageAnimation";
 import { BtnBar } from './BackBar';
 
-import { useRef } from "react";
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export function EditBlogPage() {
   //const postId: string = useParams().postId || ""
-
 
   //this is done to ensure to ensure a clean transition and avoid another query
   const storedBlogData = localStorage.getItem('selectedBlog');
@@ -18,20 +16,11 @@ export function EditBlogPage() {
     navigate(-1);
   }
 
-
-  const sectionRef = useRef<HTMLDivElement | null>(null);
-  
-  const toComments = () => {
-    if(sectionRef && sectionRef.current){
-      sectionRef.current.scrollIntoView({ behavior: 'smooth' });
-    }
-  }
-  
   return (
     <div className="scroller overflow-y-scroll h-[100.01vh] snap-y snap-mandatory">
       <section className="h-[100vh] w-[100vw] grid place-items-center snap-start">
         <PageAnimation>
-            <div className="flex flex-col  z-10 rounded-lg dark:bg-opacity-90 py-2 px-10 border-2 light:border-black shadow-sm w-[35vw] h-[87vh] overflow-hidden">
+            <div className="flex flex-col z-10 rounded-lg dark:bg-opacity-90 py-2 px-10 border-2 light:border-black shadow-sm w-[35vw] h-[87vh] overflow-hidden">
               <h2 className="text-center text-2xl">
                 <strong>{blogData?.title || 'No Title'}</strong>
               </h2>
@@ -40,10 +29,10 @@ export function EditBlogPage() {
               </h3>
               <p className="mt-2 text-md">{blogData?.content || 'No Content'}</p>
             </div>
-           <BtnBar backFunc={handleGoBack} toCommentsFunc={toComments}></BtnBar>
+           <BtnBar backFunc={handleGoBack}></BtnBar>
         </PageAnimation>
       </section>
-      <section ref={sectionRef} className="grid place-items-center h-[100vh] snap-start ">
+      <section className="grid place-items-center h-[100vh] snap-start ">
       </section>
     </div>
   ) 
