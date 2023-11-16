@@ -55,8 +55,8 @@ export function NavBar(props: navBarProps){
     
   return ( 
     <nav className={`z-20 flex fixed justify-between items-center h-[10vh] w-[100vw] px-4 py-12 shadow-sm border-2 transition-transform duration-300 ease-in-out transform ${scrolledDown ? '-translate-y-full' : 'translate-y-0'}`}>
-      <a className="text-2xl ml-16" href="http://localhost:5333/">Create Blogs</a>
-      <h1 className="z-20">Blog Viewer</h1>
+      <a className="text-2xl ml-16" href="http://localhost:5333/">View Blogs</a>
+      <h1 className="z-20">Blog Creator</h1>
       <div className="flex items-center gap-8 mr-16">
         <ModeToggle />
         {props.loggedIn && <a className="cursor-pointer w-16 text-lg whitespace-nowrap" onClick={logOut}>Sign Out</a>}
