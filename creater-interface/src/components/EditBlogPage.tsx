@@ -7,7 +7,7 @@ export function EditBlogPage() {
   //const postId: string = useParams().postId || ""
 
   //this is done to ensure to ensure a clean transition and avoid another query
-  const storedBlogData = localStorage.getItem('selectedBlog');
+  const storedBlogData = localStorage.getItem('selectedMyBlog');
   const blogData = storedBlogData ? JSON.parse(storedBlogData) : null;
 
   const navigate  = useNavigate()
