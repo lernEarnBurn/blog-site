@@ -74,18 +74,12 @@ export function MyBlogMenu() {
     }, 350);
   }
 
-
+  //adress how since the create blog div is always on top it disrupts
+  //the animation transition at the end
   return (
     <>
-      
-
       <div className="top-div relative top-24 flex flex-col gap-4 overflow-y-auto min-h-[100vh] min-w-[99vw] items-center pb-10">
-        {!loading && (
-          <div onClick={() => {navigate('/blogs/create-blog')}} className="z-10 rounded-lg dark:bg-opacity-90 mt-[4.5vh] py-2 px-10 border-2 light:border-black shadow-sm w-[35vw] h-[87vh] overflow-hidden">
-            <FilePlus className="w-[30vw] h-[80vh]"/>
-          </div>
-        )}
-
+        
         {!loading ? (
           blogs.map((blog, index) => (
             <div
@@ -104,6 +98,13 @@ export function MyBlogMenu() {
         ) : (
           <BlogSkeleton/>
         )}
+
+        {!loading && (
+          <div onClick={() => {navigate('/blogs/create-blog')}} className="z-10 rounded-lg dark:bg-opacity-90 mt-[4.5vh] py-2 px-10 border-2 light:border-black shadow-sm w-[35vw] h-[87vh] overflow-hidden">
+            <FilePlus className="w-[30vw] h-[80vh]"/>
+          </div>
+        )}
+
       </div>
     </>
   )
