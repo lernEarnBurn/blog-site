@@ -43,7 +43,7 @@ export function LoginForm(props: loginFormProps){
 
       if(response.data.token){
         localStorage.setItem('token', response.data.token)
-        localStorage.setItem('username', response.data.username)  
+        localStorage.setItem('user', JSON.stringify(response.data.user))
         setShowErrorMessage(false)
         props.setLoggedIn(true)
         setLoading(false)

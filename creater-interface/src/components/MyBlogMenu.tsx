@@ -25,15 +25,20 @@ export function MyBlogMenu() {
   useEffect(() => {
     const getMyBlogs = async () => {
       const storedBlogs = localStorage.getItem('myBlogs');
+      const userString = localStorage.getItem('user');
   
       if (storedBlogs) {
         setBlogs(JSON.parse(storedBlogs));
       } else {
+       
         try {
-          setLoading(true);
-          const response = await axios.get('http://localhost:3000/posts');
-          setBlogs(response.data);
-          setLoading(false);
+          if (userString) {
+            const user = JSON.parse(userString)
+            setLoading(true);
+            const response = await axios.get(`http://localhost:3000/posts/${user._id}`);
+            setBlogs(response.data);
+            setLoading(false);
+          }
         } catch (err) {
           console.log(err);
         }
