@@ -8,5 +8,7 @@ router.get('/posts', postController.getAllPosts)
 
 router.get('/posts/:postId/comments', commentController.getPostComments)
 
+router.get('/posts/:userId', postController.getUsersPosts)
+
 
 module.exports = router

@@ -44,6 +44,15 @@ exports.getAllPosts = asyncHandler(async(req, res, next) => {
   }
 })
 
+exports.getUsersPosts = asyncHandler(async(req, res, next) => {
+  try {
+    const myPosts = await Post.find({author: req.params.userId}).exec()
+    res.json(myPosts)
+  } catch(err) {
+    res.json(err)
+  }
+})
+
 //form validation
 exports.updatePost = asyncHandler(async(req, res, next) => {
   jwt.verify(req.token, process.env.SECRET_KEY, async(err, authData) => {
