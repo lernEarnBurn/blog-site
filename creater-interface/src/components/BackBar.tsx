@@ -1,6 +1,8 @@
 import { motion } from 'framer-motion'
 import { ArrowLeftFromLine } from 'lucide-react';
 import { Share } from 'lucide-react';
+import { FileX } from 'lucide-react';
+import { Save } from 'lucide-react';
 
 const animations = {
   initial: {opacity: 0, x: -120},
@@ -23,6 +25,12 @@ export const BtnBar = ({backFunc}: BtnBarProps) => {
       >
       <button className='w-16 h-16 btn-bar hover:scale-[1.01] flex items-center justify-center' onClick={backFunc}>
         <ArrowLeftFromLine className='icon'/>
+      </button>
+      <button className='w-16 h-16 btn-bar hover:scale-[1.01] flex items-center justify-center' /*onClick={saveFunc}*/>
+        <Save className='icon'/>
+      </button>
+      <button className='w-16 h-16 btn-bar hover:scale-[1.01] flex items-center justify-center' /*onClick={deleteFunc}*/>
+        <FileX className='icon'/>
       </button>
       <button className='w-16 h-16 btn-bar hover:scale-[1.01] flex items-center justify-center'>
         <Share className='icon'/>
