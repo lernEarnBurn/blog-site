@@ -2,6 +2,7 @@ import { useEffect, useState, useRef } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
 
+import { FilePlus } from 'lucide-react';
 import { BlogSkeleton } from "./ui/BlogSkeleton";
 
 interface Blog {
@@ -18,13 +19,12 @@ interface User {
 }
 
 export function MyBlogMenu() {
-
   const [blogs, setBlogs] = useState<Blog[]>([])
   const [loading, setLoading] = useState(false)
 
   useEffect(() => {
-    const getAllBlogs = async () => {
-      const storedBlogs = localStorage.getItem('allBlogs');
+    const getMyBlogs = async () => {
+      const storedBlogs = localStorage.getItem('myBlogs');
   
       if (storedBlogs) {
         setBlogs(JSON.parse(storedBlogs));
@@ -40,7 +40,7 @@ export function MyBlogMenu() {
       }
     };
   
-    getAllBlogs();
+    getMyBlogs();
   }, []);  
   
   
@@ -61,8 +61,8 @@ export function MyBlogMenu() {
    
     const updatedBlogs = [blog, ...blogs.slice(0, index), ...blogs.slice(index + 1)];
 
-    localStorage.setItem('allBlogs', JSON.stringify(updatedBlogs))
-    localStorage.setItem('selectedBlog', JSON.stringify(blog))
+    localStorage.setItem('myBlogs', JSON.stringify(updatedBlogs))
+    localStorage.setItem('selectedMyBlog', JSON.stringify(blog))
    
     setTimeout(() => {
       navigate(`/blogs/${blog._id}`);
@@ -71,8 +71,16 @@ export function MyBlogMenu() {
 
 
   return (
-     <>
+    <>
+      
+
       <div className="top-div relative top-24 flex flex-col gap-4 overflow-y-auto min-h-[100vh] min-w-[99vw] items-center pb-10">
+        {!loading && (
+          <div onClick={() => {navigate('/blogs/create-blog')}} className="z-10 rounded-lg dark:bg-opacity-90 mt-[4.5vh] py-2 px-10 border-2 light:border-black shadow-sm w-[35vw] h-[87vh] overflow-hidden">
+            <FilePlus className="w-[30vw] h-[80vh]"/>
+          </div>
+        )}
+
         {!loading ? (
           blogs.map((blog, index) => (
             <div
@@ -84,9 +92,7 @@ export function MyBlogMenu() {
               <h2 className="text-center text-2xl">
                 <strong>{blog.title}</strong>
               </h2>
-              <h3 className="text-center text-sm">
-                By {blog.author && blog.author.username ? blog.author.username : 'changeWhenCanCreateBlogs'}
-              </h3>
+              <h3 className="text-center text-sm">By Me</h3>
               <p className="mt-2 text-md">{blog.content}</p>
             </div>
           ))

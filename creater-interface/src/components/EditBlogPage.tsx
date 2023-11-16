@@ -24,9 +24,7 @@ export function EditBlogPage() {
               <h2 className="text-center text-2xl">
                 <strong>{blogData?.title || 'No Title'}</strong>
               </h2>
-              <h3 className="text-center text-sm">
-                By {blogData?.author?.username || 'changeWhenCanCreateBlogs'}
-              </h3>
+              <h3 className="text-center text-sm">By Me</h3>
               <p className="mt-2 text-md">{blogData?.content || 'No Content'}</p>
             </div>
            <BtnBar backFunc={handleGoBack}></BtnBar>
