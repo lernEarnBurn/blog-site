@@ -116,7 +116,6 @@ export function SignupForm(props: signUpFormProps) {
         </CardContent>
         <CardFooter>
           <Link to="/log-in">Login</Link>
-          <Link to="/blogs">Skip Signup</Link>
         </CardFooter>
       </Card>
     </div>
