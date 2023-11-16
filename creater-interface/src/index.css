@@ -15,6 +15,9 @@
   -webkit-text-size-adjust: 100%;
 }
 
+.blue {
+  color: #646cff;
+}
 
 .btn-bar {
   background-color: #646cffb5;

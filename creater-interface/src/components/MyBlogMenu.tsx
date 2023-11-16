@@ -101,7 +101,7 @@ export function MyBlogMenu() {
 
         {!loading && (
           <div onClick={() => {navigate('/blogs/create-blog')}} className="z-10 rounded-lg dark:bg-opacity-90 mt-[4.5vh] py-2 px-10 border-2 light:border-black shadow-sm w-[35vw] h-[87vh] overflow-hidden">
-            <FilePlus className="w-[30vw] h-[80vh]"/>
+            <FilePlus className="blue w-[30vw] h-[80vh]"/>
           </div>
         )}
 
