@@ -15,6 +15,16 @@
   -webkit-text-size-adjust: 100%;
 }
 
+.ghost-input {
+  cursor:text;
+  border-style: none;
+  outline: none;
+  resize: none;
+  background-color: transparent;
+}
+
+
+
 .blue {
   color: #646cff;
 }

@@ -38,14 +38,10 @@ export function EditBlogPage() {
     <div className="scroller h-[100.01vh]">
       <section className="h-[100vh] w-[100vw] grid place-items-center">
         <PageAnimation>
-            <div className="flex flex-col z-10 rounded-lg dark:bg-opacity-90 py-2 px-10 border-2 light:border-black shadow-sm w-[35vw] h-[87vh] overflow-hidden">
-              
-              <input onChange={handleTitleChange} value={titleValue} type="text" className="w-24 mx-auto text-2xl font-bold ghost-input"/>
-              
+            <div className="flex flex-col z-10 rounded-lg dark:bg-opacity-90 py-2 px-10 border-2 light:border-black shadow-sm w-[35vw] h-[87vh] overflow-hidden">      
+              <textarea rows={1} maxLength={25} spellCheck="false" onChange={handleTitleChange} value={titleValue} className="w-[25vw] blue mx-auto text-2xl font-bold text-center ghost-input"/>
               <h3 className="text-center text-sm">By Me</h3>
-              <p className="mt-2 text-md">{blogData?.content || 'No Content'}</p>
-              <input onChange={handleContentChange} value={contentValue} type="text" className="w-24 mx-auto text-2xl font-bold ghost-input"/>
-
+              <textarea spellCheck="false" onChange={handleContentChange} rows={21} maxLength={1000} value={contentValue} className="w-[30vw] mt-2 mx-auto ghost-input"/>
             </div>
            <BtnBar backFunc={handleGoBack}></BtnBar>
         </PageAnimation>
