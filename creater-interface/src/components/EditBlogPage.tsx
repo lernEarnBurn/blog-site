@@ -2,6 +2,7 @@ import { PageAnimation } from "./PageAnimation";
 import { BtnBar } from './BackBar';
 
 import { useEffect, useState } from "react";
+import axios from "axios";
 
 import { Blog } from "./MyBlogMenu";
 import { useNavigate } from 'react-router-dom';
@@ -43,6 +44,29 @@ export function EditBlogPage() {
       localStorage.setItem('myBlogs', JSON.stringify(storedBlogs));
     };
   }, [titleValue, contentValue, blogData]);
+
+  //setLoading to disable button and also have a saved thing pop up
+  const [loadingSave, setLoadingSave] = useState(false)
+
+  async function saveBlog(){
+    console.log('run')
+    setLoadingSave(true)
+    const token = localStorage.getItem('token')
+    try{
+      const response = await axios.put(`http://localhost:3000/posts/${blogData._id}`, {
+        newTitle: titleValue, newContent: contentValue
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      setLoadingSave(false)
+    }catch(err){
+      console.log(err)
+    }
+  }
   
 
 
@@ -55,7 +79,7 @@ export function EditBlogPage() {
               <h3 className="text-center text-sm">By Me</h3>
               <textarea spellCheck="false" onChange={handleContentChange} rows={21} maxLength={1000} value={contentValue} className="w-[30vw] mt-2 mx-auto ghost-input"/>
             </div>
-           <BtnBar backFunc={handleGoBack}></BtnBar>
+           <BtnBar loadingSave={loadingSave} backFunc={handleGoBack} saveFunc={saveBlog}></BtnBar>
         </PageAnimation>
       </section>
     </div>

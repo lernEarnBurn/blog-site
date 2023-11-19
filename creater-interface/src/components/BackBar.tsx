@@ -12,9 +12,11 @@ const animations = {
 
 interface BtnBarProps {
   backFunc: () => void; 
+  saveFunc: () => void;
+  loadingSave: boolean;
 }
 
-export const BtnBar = ({backFunc}: BtnBarProps) => {
+export const BtnBar = ({backFunc, saveFunc, loadingSave}: BtnBarProps) => {
   return (
     <motion.div
       className='absolute top-0 left-[-5.3vw] flex flex-col gap-1 whitespace-nowrap w-fit' 
@@ -26,9 +28,15 @@ export const BtnBar = ({backFunc}: BtnBarProps) => {
       <button className='w-16 h-16 btn-bar hover:scale-[1.01] flex items-center justify-center' onClick={backFunc}>
         <ArrowLeftFromLine className='icon'/>
       </button>
-      <button className='w-16 h-16 btn-bar hover:scale-[1.01] flex items-center justify-center' /*onClick={saveFunc}*/>
-        <Save className='icon'/>
-      </button>
+      {loadingSave ? (
+        <button disabled className='w-16 h-16 btn-bar hover:scale-[1.01] flex items-center justify-center' onClick={saveFunc}>
+          <Save className='icon'/>
+        </button>
+      ): (
+        <button className='w-16 h-16 btn-bar hover:scale-[1.01] flex items-center justify-center' onClick={saveFunc}>
+          <Save className='icon'/>
+        </button>
+      )}
       <button className='w-16 h-16 btn-bar hover:scale-[1.01] flex items-center justify-center' /*onClick={deleteFunc}*/>
         <FileX className='icon'/>
       </button>

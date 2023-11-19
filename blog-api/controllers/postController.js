@@ -61,6 +61,8 @@ exports.updatePost = asyncHandler(async(req, res, next) => {
     }else{
       const update = await Post.updateOne({_id: req.params.postId}, {$set: {title: req.body.newTitle, content: req.body.newContent} })
       res.json('post updated')
+      
+    
     }
   })
 })
