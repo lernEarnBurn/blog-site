@@ -18,22 +18,21 @@ export interface User {
   password: string;
 }
 
-export function MyBlogMenu() {
-  const [blogs, setBlogs] = useState<Blog[]>([])
-  const [loading, setLoading] = useState(false)
+function useFetchMyBlogs() {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const getMyBlogs = async () => {
       const storedBlogs = localStorage.getItem('myBlogs');
       const userString = localStorage.getItem('user');
-  
+
       if (storedBlogs) {
         setBlogs(JSON.parse(storedBlogs));
       } else {
-       
         try {
           if (userString) {
-            const user = JSON.parse(userString)
+            const user = JSON.parse(userString);
             setLoading(true);
             const response = await axios.get(`http://localhost:3000/posts/${user._id}`);
             setBlogs(response.data);
@@ -44,10 +43,16 @@ export function MyBlogMenu() {
         }
       }
     };
-  
+
     getMyBlogs();
-  }, []);  
-  
+  }, []);
+
+  return { blogs, loading };
+}
+
+
+export function MyBlogMenu() {
+  const { blogs, loading } = useFetchMyBlogs();
   
   const navigate = useNavigate()
   const itemsRef = useRef<Array<HTMLDivElement | null>>([])
@@ -74,8 +79,6 @@ export function MyBlogMenu() {
     }, 350);
   }
 
-  //adress how since the create blog div is always on top it disrupts
-  //the animation transition at the end
   return (
     <>
       <div className="top-div relative top-24 flex flex-col gap-4 overflow-y-auto min-h-[100vh] min-w-[99vw] items-center pb-10">
