@@ -7,50 +7,6 @@ import axios from "axios";
 import { Blog } from "./MyBlogMenu";
 import { useNavigate } from 'react-router-dom';
 
-const useUpdateBlogOnDb = (blogData: Blog, titleValue: string, contentValue: string) => {
-  const [loadingSave, setLoadingSave] = useState(false);
-
-  const saveBlog = async () => {
-    setLoadingSave(true);
-    const token = localStorage.getItem('token');
-
-    try {
-      console.log('saving blog...');
-      await axios.put(
-        `http://localhost:3000/posts/${blogData._id}`,
-        { newTitle: titleValue, newContent: contentValue },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setLoadingSave(false);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  return { loadingSave, saveBlog };
-};
-
-
-const useUpdateBlogLocally = (titleValue: string, contentValue: string, blogData) => {
-  useEffect(() => {
-    return () => {
-      const myBlogs = localStorage.getItem('myBlogs');
-      const storedBlogs = JSON.parse(myBlogs) || [];
-
-      const indexToUpdate = storedBlogs.findIndex((blog) => blog._id === blogData._id);
-
-      storedBlogs[indexToUpdate].title = titleValue;
-      storedBlogs[indexToUpdate].content = contentValue;
-
-      localStorage.setItem('myBlogs', JSON.stringify(storedBlogs));
-    };
-  }, [titleValue, contentValue, blogData]);
-};
-
 export function EditBlogPage() {
 
   //this is done to ensure to ensure a clean aimation transition and avoid another query
@@ -99,3 +55,48 @@ export function EditBlogPage() {
     </div>
   ) 
 }
+
+
+const useUpdateBlogOnDb = (blogData: Blog, titleValue: string, contentValue: string) => {
+  const [loadingSave, setLoadingSave] = useState(false);
+
+  const saveBlog = async () => {
+    setLoadingSave(true);
+    const token = localStorage.getItem('token');
+
+    try {
+      console.log('saving blog...');
+      await axios.put(
+        `http://localhost:3000/posts/${blogData._id}`,
+        { newTitle: titleValue, newContent: contentValue },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setLoadingSave(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return { loadingSave, saveBlog };
+};
+
+
+const useUpdateBlogLocally = (titleValue: string, contentValue: string, blogData) => {
+  useEffect(() => {
+    return () => {
+      const myBlogs = localStorage.getItem('myBlogs');
+      const storedBlogs = JSON.parse(myBlogs) || [];
+
+      const indexToUpdate = storedBlogs.findIndex((blog) => blog._id === blogData._id);
+
+      storedBlogs[indexToUpdate].title = titleValue;
+      storedBlogs[indexToUpdate].content = contentValue;
+
+      localStorage.setItem('myBlogs', JSON.stringify(storedBlogs));
+    };
+  }, [titleValue, contentValue, blogData]);
+};

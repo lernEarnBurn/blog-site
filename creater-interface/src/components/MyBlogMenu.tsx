@@ -18,39 +18,6 @@ export interface User {
   password: string;
 }
 
-function useFetchMyBlogs() {
-  const [blogs, setBlogs] = useState<Blog[]>([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    const getMyBlogs = async () => {
-      const storedBlogs = localStorage.getItem('myBlogs');
-      const userString = localStorage.getItem('user');
-
-      if (storedBlogs) {
-        setBlogs(JSON.parse(storedBlogs));
-      } else {
-        try {
-          if (userString) {
-            const user = JSON.parse(userString);
-            setLoading(true);
-            const response = await axios.get(`http://localhost:3000/posts/${user._id}`);
-            setBlogs(response.data);
-            setLoading(false);
-          }
-        } catch (err) {
-          console.log(err);
-        }
-      }
-    };
-
-    getMyBlogs();
-  }, []);
-
-  return { blogs, loading };
-}
-
-
 export function MyBlogMenu() {
   const { blogs, loading } = useFetchMyBlogs();
   
@@ -111,4 +78,37 @@ export function MyBlogMenu() {
       </div>
     </>
   )
+}
+
+
+function useFetchMyBlogs() {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const getMyBlogs = async () => {
+      const storedBlogs = localStorage.getItem('myBlogs');
+      const userString = localStorage.getItem('user');
+
+      if (storedBlogs) {
+        setBlogs(JSON.parse(storedBlogs));
+      } else {
+        try {
+          if (userString) {
+            const user = JSON.parse(userString);
+            setLoading(true);
+            const response = await axios.get(`http://localhost:3000/posts/${user._id}`);
+            setBlogs(response.data);
+            setLoading(false);
+          }
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    };
+
+    getMyBlogs();
+  }, []);
+
+  return { blogs, loading };
 }
