@@ -5,14 +5,14 @@ import { useNavigate } from "react-router-dom";
 import { FilePlus } from 'lucide-react';
 import { BlogSkeleton } from "./ui/BlogSkeleton";
 
-interface Blog {
+export interface Blog {
   _id: string;
   author: User;
   content: string;
   title: string;
 }
 
-interface User {
+export interface User {
   _id: string;
   username: string;
   password: string;
@@ -86,13 +86,13 @@ export function MyBlogMenu() {
               ref={(elem) => (itemsRef.current[index] = elem)}
               onClick={() => transitionToBlogPage(blog, index)}
               className="z-10 rounded-lg dark:bg-opacity-90 mt-[4.5vh] py-2 px-10 border-2 light:border-black shadow-sm w-[35vw] h-[87vh] overflow-hidden"
-              key={blog._id}
+              key={index}
             >
               <h2 className="text-center text-2xl">
                 <strong>{blog.title}</strong>
               </h2>
               <h3 className="text-center text-sm">By Me</h3>
-              <p className="mt-2 text-md">{blog.content}</p>
+              <p className="mt-2 text-md h-[31.5em] w-[30vw]">{blog.content}</p>
             </div>
           ))
         ) : (

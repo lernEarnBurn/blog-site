@@ -1,8 +1,9 @@
 import { PageAnimation } from "./PageAnimation";
 import { BtnBar } from './BackBar';
 
-import { useEffect, useRef, useState } from "react";
-import { RefObject } from "react";
+import { useEffect, useState } from "react";
+
+import { Blog } from "./MyBlogMenu";
 import { useNavigate } from 'react-router-dom';
 
 export function EditBlogPage() {
@@ -28,9 +29,20 @@ export function EditBlogPage() {
     setContentValue(e.target.value)
   }
 
-  //const titleRef: RefObject<HTMLInputElement> = useRef(null);
+  //this changes localStorage based on edited changes
+  useEffect(() => {
+    return () => {
+      const myBlogs = localStorage.getItem('myBlogs')
+      const storedBlogs: Blog[] = JSON.parse(myBlogs) || [];
+      
+      const indexToUpdate = storedBlogs.findIndex(blog => blog._id === blogData._id);
 
-  //when updating blog on backend need to change the objs in localStorage
+      storedBlogs[indexToUpdate].title = titleValue;
+      storedBlogs[indexToUpdate].content = contentValue;
+
+      localStorage.setItem('myBlogs', JSON.stringify(storedBlogs));
+    };
+  }, [titleValue, contentValue, blogData]);
   
 
 
