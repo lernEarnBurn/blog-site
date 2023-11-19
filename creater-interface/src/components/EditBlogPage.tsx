@@ -13,10 +13,11 @@ export function EditBlogPage() {
   const storedBlogData = localStorage.getItem('selectedMyBlog');
   const blogData = storedBlogData ? JSON.parse(storedBlogData) : null;
 
-  const navigate  = useNavigate()
+  const navigate = useNavigate()
   
-  const handleGoBack = () => {
+  const handleGoBack = async() => {
     navigate(-1);
+    await saveBlog()
   }
 
   const [titleValue, setTitleValue] = useState(blogData?.title)
@@ -43,16 +44,17 @@ export function EditBlogPage() {
 
       localStorage.setItem('myBlogs', JSON.stringify(storedBlogs));
     };
-  }, [titleValue, contentValue, blogData]);
+  }, [titleValue, contentValue, blogData])
 
-  //setLoading to disable button and also have a saved thing pop up
+  //have a saved thing pop up (shadcn might have an easy out of the box solution)
   const [loadingSave, setLoadingSave] = useState(false)
 
   async function saveBlog(){
-    console.log('run')
+    
     setLoadingSave(true)
     const token = localStorage.getItem('token')
     try{
+      console.log('saving blog...')
       const response = await axios.put(`http://localhost:3000/posts/${blogData._id}`, {
         newTitle: titleValue, newContent: contentValue
       },
@@ -61,13 +63,11 @@ export function EditBlogPage() {
           Authorization: `Bearer ${token}`,
         },
       });
-
       setLoadingSave(false)
     }catch(err){
       console.log(err)
     }
   }
-  
 
 
   return (
