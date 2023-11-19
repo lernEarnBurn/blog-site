@@ -7,7 +7,7 @@ import axios from "axios";
 import { Blog } from "./MyBlogMenu";
 import { useNavigate } from 'react-router-dom';
 
-const useBlogSaving = (blogData: Blog, titleValue: string, contentValue: string) => {
+const useUpdateBlogOnDb = (blogData: Blog, titleValue: string, contentValue: string) => {
   const [loadingSave, setLoadingSave] = useState(false);
 
   const saveBlog = async () => {
@@ -34,6 +34,23 @@ const useBlogSaving = (blogData: Blog, titleValue: string, contentValue: string)
   return { loadingSave, saveBlog };
 };
 
+
+const useUpdateBlogLocally = (titleValue: string, contentValue: string, blogData) => {
+  useEffect(() => {
+    return () => {
+      const myBlogs = localStorage.getItem('myBlogs');
+      const storedBlogs = JSON.parse(myBlogs) || [];
+
+      const indexToUpdate = storedBlogs.findIndex((blog) => blog._id === blogData._id);
+
+      storedBlogs[indexToUpdate].title = titleValue;
+      storedBlogs[indexToUpdate].content = contentValue;
+
+      localStorage.setItem('myBlogs', JSON.stringify(storedBlogs));
+    };
+  }, [titleValue, contentValue, blogData]);
+};
+
 export function EditBlogPage() {
 
   //this is done to ensure to ensure a clean aimation transition and avoid another query
@@ -58,23 +75,11 @@ export function EditBlogPage() {
     setContentValue(e.target.value)
   }
 
-  //this changes localStorage based on edited changes
-  useEffect(() => {
-    return () => {
-      const myBlogs = localStorage.getItem('myBlogs')
-      const storedBlogs: Blog[] = JSON.parse(myBlogs) || [];
-      
-      const indexToUpdate = storedBlogs.findIndex(blog => blog._id === blogData._id);
-
-      storedBlogs[indexToUpdate].title = titleValue;
-      storedBlogs[indexToUpdate].content = contentValue;
-
-      localStorage.setItem('myBlogs', JSON.stringify(storedBlogs));
-    };
-  }, [titleValue, contentValue, blogData])
+  
+  useUpdateBlogLocally(titleValue, contentValue, blogData);
 
   //have a saved thing pop up (shadcn might have an easy out of the box solution)
-  const { loadingSave, saveBlog } = useBlogSaving(blogData, titleValue, contentValue);
+  const { loadingSave, saveBlog } = useUpdateBlogOnDb(blogData, titleValue, contentValue);
 
   
 
