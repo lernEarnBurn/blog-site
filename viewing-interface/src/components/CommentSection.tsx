@@ -2,7 +2,6 @@ import axios from "axios"
 
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react"
-import type { RefObject } from 'react';
 
 import { Comment } from "./ui/comment"
 import { Card, CardContent, CardTitle, CardFooter } from "./ui/card"
@@ -28,67 +27,9 @@ type Comment = {
 };
 
 export function CommentSection(props: CommentSectionProps){
-  const [loading, setLoading] = useState(false)
-  const [comments, setComments] = useState<Comment[]>([])
+  const { loading, comments } = useFetchPostComments(props.postId);
+  const { contentRef, createComment } = useCreateComment(props.postId);
 
-  
-  useEffect(() => {
-    const getAllComments = async () => { 
-      try {
-        setLoading(true);
-        const response = await axios.get(`http://localhost:3000/posts/${props.postId}/comments`)
-        setComments(response.data);
-        setLoading(false);
-        console.log(comments)
-      } catch (err) {
-       console.log(err);
-     }
-  }
-
-    getAllComments();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [props.postId]);  
-
-
-  const contentRef: RefObject<HTMLInputElement> = useRef(null);
-  const navigate = useNavigate()
-
-  async function createComment(){
-    if(localStorage.getItem('token') && contentRef.current?.value.trim() !== "" && contentRef.current?.value){
-      try {
-        setLoading(true)
-        const config =  { headers: {
-          'Content-Type': 'application/json',
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
-        } }
-
-        const data = {
-          author: localStorage.getItem('username'),
-          post: props.postId,
-          content: contentRef.current?.value.trim() || "",
-        };
-
-        const response = await axios.post(`http://localhost:3000/posts/${props.postId}/comments`, data, config)
-        setLoading(false)
-
-        const newComment: Comment = {
-          id: 'sdabidusbadiubsudadbisdbusa',
-          author: {_id: '', username: localStorage.getItem('username'), password: ''},
-          post: props.postId,
-          content: contentRef.current?.value.trim() || "",
-        }
-        setComments((prevComments: Comment[]) => [...prevComments, newComment])
-        contentRef.current.value = ""
-
-
-      } catch (err){
-        console.log(err)
-      }
-    }else{
-      navigate('/')
-    }
-  }
-  
   return (
     <>
       <Card className="w-[30vw] h-[75vh] py-2 flex flex-col">
@@ -112,4 +53,70 @@ export function CommentSection(props: CommentSectionProps){
       </Card>
     </>
   )
+}
+
+
+function useFetchPostComments(postId: string) {
+  const [loading, setLoading] = useState(false);
+  const [comments, setComments] = useState<Comment[]>([]);
+
+  useEffect(() => {
+    const fetchPostComments = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get(`http://localhost:3000/posts/${postId}/comments`);
+        setComments(response.data);
+        setLoading(false);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    fetchPostComments();
+  }, [postId]);
+
+  return { loading, comments };
+}
+
+function useCreateComment(postId: string) {
+  const contentRef = useRef<HTMLInputElement>(null);
+  const navigate = useNavigate();
+
+  const createComment = async () => {
+    if (localStorage.getItem('token') && contentRef.current?.value.trim() !== "" && contentRef.current?.value) {
+      try {
+        const config = {
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+          },
+        };
+
+        const data = {
+          author: localStorage.getItem('username'),
+          post: postId,
+          content: contentRef.current?.value.trim() || "",
+        };
+
+        const response = await axios.post(`http://localhost:3000/posts/${postId}/comments`, data, config);
+
+        const newComment = {
+          id: 'sdabidusbadiubsudadbisdbusa',
+          author: { _id: '', username: localStorage.getItem('username'), password: '' },
+          post: postId,
+          content: contentRef.current?.value.trim() || "",
+        };
+
+        // Handle the logic for updating state or UI as needed
+
+        contentRef.current.value = "";
+      } catch (err) {
+        console.log(err);
+      }
+    } else {
+      navigate('/');
+    }
+  };
+
+  return { contentRef, createComment };
 }

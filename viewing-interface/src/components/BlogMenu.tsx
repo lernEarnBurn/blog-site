@@ -18,31 +18,7 @@ interface User {
 }
 
 export function BlogMenu() {
-
-  const [blogs, setBlogs] = useState<Blog[]>([])
-  const [loading, setLoading] = useState(false)
-
-  useEffect(() => {
-    const getAllBlogs = async () => {
-      const storedBlogs = localStorage.getItem('allBlogs');
-  
-      if (storedBlogs) {
-        setBlogs(JSON.parse(storedBlogs));
-      } else {
-        try {
-          setLoading(true);
-          const response = await axios.get('http://localhost:3000/posts');
-          setBlogs(response.data);
-          setLoading(false);
-        } catch (err) {
-          console.log(err);
-        }
-      }
-    };
-  
-    getAllBlogs();
-  }, []);  
-  
+ const {blogs, loading} = useFetchAllBlogs()
   
   const navigate = useNavigate()
   const itemsRef = useRef<Array<HTMLDivElement | null>>([])
@@ -96,4 +72,32 @@ export function BlogMenu() {
       </div>
     </>
   )
+}
+
+function useFetchAllBlogs() {
+  const [blogs, setBlogs] = useState<Blog[]>([]);
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const getAllBlogs = async () => {
+      const storedBlogs = localStorage.getItem('allBlogs');
+
+      if (storedBlogs) {
+        setBlogs(JSON.parse(storedBlogs));
+      } else {
+        try {
+          setLoading(true);
+          const response = await axios.get('http://localhost:3000/posts');
+          setBlogs(response.data);
+          setLoading(false);
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    };
+
+    getAllBlogs();
+  }, []);
+
+  return { blogs, loading };
 }
