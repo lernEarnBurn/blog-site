@@ -7,6 +7,33 @@ import axios from "axios";
 import { Blog } from "./MyBlogMenu";
 import { useNavigate } from 'react-router-dom';
 
+const useBlogSaving = (blogData: Blog, titleValue: string, contentValue: string) => {
+  const [loadingSave, setLoadingSave] = useState(false);
+
+  const saveBlog = async () => {
+    setLoadingSave(true);
+    const token = localStorage.getItem('token');
+
+    try {
+      console.log('saving blog...');
+      await axios.put(
+        `http://localhost:3000/posts/${blogData._id}`,
+        { newTitle: titleValue, newContent: contentValue },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      setLoadingSave(false);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  return { loadingSave, saveBlog };
+};
+
 export function EditBlogPage() {
 
   //this is done to ensure to ensure a clean aimation transition and avoid another query
@@ -47,27 +74,9 @@ export function EditBlogPage() {
   }, [titleValue, contentValue, blogData])
 
   //have a saved thing pop up (shadcn might have an easy out of the box solution)
-  const [loadingSave, setLoadingSave] = useState(false)
+  const { loadingSave, saveBlog } = useBlogSaving(blogData, titleValue, contentValue);
 
-  async function saveBlog(){
-    
-    setLoadingSave(true)
-    const token = localStorage.getItem('token')
-    try{
-      console.log('saving blog...')
-      const response = await axios.put(`http://localhost:3000/posts/${blogData._id}`, {
-        newTitle: titleValue, newContent: contentValue
-      },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setLoadingSave(false)
-    }catch(err){
-      console.log(err)
-    }
-  }
+  
 
 
   return (
