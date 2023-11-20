@@ -5,16 +5,17 @@ import { FileX } from 'lucide-react';
 import { Save } from 'lucide-react';
 
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-  DialogClose,
-  DialogFooter
-} from "@/components/ui/dialog"
-import { Button } from './ui/button';
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
+
 
 
 const animations = {
@@ -52,28 +53,25 @@ export const BtnBar = ({backFunc, deleteFunc, saveFunc, loadingSave}: BtnBarProp
           <Save className='icon'/>
         </button>
       )}
-      <Dialog>
-        <DialogTrigger asChild>
+      <AlertDialog>
+        <AlertDialogTrigger asChild>
           <button className='w-16 h-16 btn-bar hover:scale-[1.01] flex items-center justify-center'>
             <FileX className='icon'/>
           </button>
-        </DialogTrigger>
-        <DialogContent className="sm:max-w-md">
-          <DialogHeader>
-            <DialogTitle>Delete Blog</DialogTitle>
-            <DialogDescription>
+        </AlertDialogTrigger>
+        <AlertDialogContent className="sm:max-w-md">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Delete Blog</AlertDialogTitle>
+            <AlertDialogDescription>
               Are you sure you want to delete this blog? Once deleted, your precious work will be gone forever.
-            </DialogDescription>
-          </DialogHeader>
-
-          <DialogFooter className="sm:justify-between">
-            <DialogClose asChild>
-              <Button className='btn-bar hover:bg-indigo-600 hover:bg-opacity-80'>Cancel</Button>
-            </DialogClose>
-            <Button onClick={deleteFunc} variant="destructive">Delete</Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter className="sm:justify-between">
+            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogAction onClick={deleteFunc}>Continue</AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
 
 
       <button className='w-16 h-16 btn-bar hover:scale-[1.01] flex items-center justify-center'>
