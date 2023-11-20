@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 
 import { Blog } from "./MyBlogMenu";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, NavigateFunction } from 'react-router-dom';
 
 export function EditBlogPage() {
 
@@ -36,6 +36,8 @@ export function EditBlogPage() {
   //have a saved thing pop up (shadcn might have an easy out of the box solution)
   const { loadingSave, saveBlog } = useUpdateBlogOnDb(blogData, titleValue, contentValue);
 
+  const { deleteBlog } = useDeleteBlog(blogData, navigate)
+
   //make delete functionality
   
   return (
@@ -47,7 +49,7 @@ export function EditBlogPage() {
               <h3 className="text-center text-sm">By Me</h3>
               <textarea spellCheck="false" onChange={handleContentChange} rows={21} maxLength={1000} value={contentValue} className="w-[30vw] mt-2 mx-auto ghost-input"/>
             </div>
-           <BtnBar loadingSave={loadingSave} deleteFunc={() => {console.log('deletefunc')}} backFunc={handleGoBack} saveFunc={saveBlog}></BtnBar>
+           <BtnBar loadingSave={loadingSave} deleteFunc={deleteBlog} backFunc={handleGoBack} saveFunc={saveBlog}></BtnBar>
         </PageAnimation>
       </section>
     </div>
@@ -83,30 +85,47 @@ const useUpdateBlogOnDb = (blogData: Blog, titleValue: string, contentValue: str
 };
 
 
-const useUpdateBlogLocally = (titleValue: string, contentValue: string, blogData) => {
+const useUpdateBlogLocally = (titleValue: string, contentValue: string, blogData: Blog) => {
   useEffect(() => {
     return () => {
       const myBlogs = localStorage.getItem('myBlogs');
       const storedBlogs = JSON.parse(myBlogs) || [];
-
-      const indexToUpdate = storedBlogs.findIndex((blog) => blog._id === blogData._id);
-
-      storedBlogs[indexToUpdate].title = titleValue;
-      storedBlogs[indexToUpdate].content = contentValue;
-
-      localStorage.setItem('myBlogs', JSON.stringify(storedBlogs));
+      if(storedBlogs.length > 0){
+        const indexToUpdate = storedBlogs.findIndex((blog) => blog._id === blogData._id);
+        if (indexToUpdate !== -1 && indexToUpdate < storedBlogs.length) {
+          storedBlogs[indexToUpdate].title = titleValue;
+          storedBlogs[indexToUpdate].content = contentValue;
+          localStorage.setItem('myBlogs', JSON.stringify(storedBlogs));
+        }
+      }
     };
   }, [titleValue, contentValue, blogData]);
 };
 
-//need to make a system to display an are you sure delete thing
-//as well as to only delete on the yes there
-const useDeleteBlog = (blogData) => {
+//add loading
+const useDeleteBlog = (blogData: Blog, navigate: NavigateFunction) => {
+  const deleteBlogLocally = () => {
+    const myBlogs = localStorage.getItem('myBlogs');
+    const storedBlogs = JSON.parse(myBlogs) || [];
+    const updatedBlogs = storedBlogs.filter((blog: Blog) => blog._id !== blogData._id);
+    console.log()
+    localStorage.setItem('myBlogs', JSON.stringify(updatedBlogs))
+  }
+
   const deleteBlog = async() => {
     try{
-
+      const token = localStorage.getItem('token');
+      const response = await axios.delete(`http://localhost:3000/posts/${blogData._id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      deleteBlogLocally()
+      navigate('/blogs')
     } catch(err){
       console.log(err)
     }
   }
+
+  return {deleteBlog}
 }
