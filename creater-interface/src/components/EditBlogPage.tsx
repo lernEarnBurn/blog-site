@@ -36,7 +36,7 @@ export function EditBlogPage() {
   //have a saved thing pop up (shadcn might have an easy out of the box solution)
   const { loadingSave, saveBlog } = useUpdateBlogOnDb(blogData, titleValue, contentValue);
 
-  const { deleteBlog } = useDeleteBlog(blogData, navigate)
+  const { deleteBlog, deleteLoading } = useDeleteBlog(blogData, navigate)
 
   //make delete functionality
   
@@ -49,7 +49,7 @@ export function EditBlogPage() {
               <h3 className="text-center text-sm">By Me</h3>
               <textarea spellCheck="false" onChange={handleContentChange} rows={21} maxLength={1000} value={contentValue} className="w-[30vw] mt-2 mx-auto ghost-input"/>
             </div>
-           <BtnBar loadingSave={loadingSave} deleteFunc={deleteBlog} backFunc={handleGoBack} saveFunc={saveBlog}></BtnBar>
+           <BtnBar loadingSave={loadingSave} deleteLoading={deleteLoading} deleteFunc={deleteBlog} backFunc={handleGoBack} saveFunc={saveBlog}></BtnBar>
         </PageAnimation>
       </section>
     </div>
@@ -104,6 +104,9 @@ const useUpdateBlogLocally = (titleValue: string, contentValue: string, blogData
 
 //add loading
 const useDeleteBlog = (blogData: Blog, navigate: NavigateFunction) => {
+  const [deleteLoading, setDeleteLoading] = useState(false)
+
+
   const deleteBlogLocally = () => {
     const myBlogs = localStorage.getItem('myBlogs');
     const storedBlogs = JSON.parse(myBlogs) || [];
@@ -113,6 +116,7 @@ const useDeleteBlog = (blogData: Blog, navigate: NavigateFunction) => {
   }
 
   const deleteBlog = async() => {
+    setDeleteLoading(true)
     try{
       const token = localStorage.getItem('token');
       const response = await axios.delete(`http://localhost:3000/posts/${blogData._id}`, {
@@ -121,11 +125,12 @@ const useDeleteBlog = (blogData: Blog, navigate: NavigateFunction) => {
         },
       })
       deleteBlogLocally()
+      setDeleteLoading(false)
       navigate('/blogs')
     } catch(err){
       console.log(err)
     }
   }
 
-  return {deleteBlog}
+  return { deleteBlog, deleteLoading }
 }

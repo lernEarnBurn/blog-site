@@ -3,6 +3,8 @@ import { ArrowLeftFromLine } from 'lucide-react';
 import { Share } from 'lucide-react';
 import { FileX } from 'lucide-react';
 import { Save } from 'lucide-react';
+import { Loader2 } from 'lucide-react';
+
 
 import {
   AlertDialog,
@@ -18,6 +20,7 @@ import {
 
 
 
+
 const animations = {
   initial: {opacity: 0, x: -120},
   animate: {opacity: 1, x: 0},
@@ -29,9 +32,10 @@ interface BtnBarProps {
   saveFunc: () => void;
   deleteFunc: () => void;
   loadingSave: boolean;
+  deleteLoading: boolean;
 }
 
-export const BtnBar = ({backFunc, deleteFunc, saveFunc, loadingSave}: BtnBarProps) => {
+export const BtnBar = ({backFunc, deleteFunc, saveFunc, loadingSave, deleteLoading}: BtnBarProps) => {
   return (
     <motion.div
       className='absolute top-0 left-[-5.3vw] flex flex-col gap-1 whitespace-nowrap w-fit' 
@@ -68,7 +72,14 @@ export const BtnBar = ({backFunc, deleteFunc, saveFunc, loadingSave}: BtnBarProp
           </AlertDialogHeader>
           <AlertDialogFooter className="sm:justify-between">
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction onClick={deleteFunc}>Continue</AlertDialogAction>
+            {deleteLoading ? (
+              <AlertDialogAction disabled onClick={deleteFunc}>
+                <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+              </AlertDialogAction>
+            ):(
+              <AlertDialogAction onClick={deleteFunc}>Continue</AlertDialogAction>
+            )}
+            
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
