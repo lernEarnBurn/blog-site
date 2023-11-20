@@ -33,6 +33,11 @@
 
 }
 
+.lighter-than-btn-bar {
+  background-color: #646cff7e;
+
+}
+
 .icon {
   color: hsl(var(--background));
 }

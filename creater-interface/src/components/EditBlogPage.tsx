@@ -30,16 +30,14 @@ export function EditBlogPage() {
   const handleContentChange = (e) => {
     setContentValue(e.target.value)
   }
-
   
   useUpdateBlogLocally(titleValue, contentValue, blogData);
 
   //have a saved thing pop up (shadcn might have an easy out of the box solution)
   const { loadingSave, saveBlog } = useUpdateBlogOnDb(blogData, titleValue, contentValue);
 
+  //make delete functionality
   
-
-
   return (
     <div className="scroller h-[100.01vh]">
       <section className="h-[100vh] w-[100vw] grid place-items-center">
@@ -49,7 +47,7 @@ export function EditBlogPage() {
               <h3 className="text-center text-sm">By Me</h3>
               <textarea spellCheck="false" onChange={handleContentChange} rows={21} maxLength={1000} value={contentValue} className="w-[30vw] mt-2 mx-auto ghost-input"/>
             </div>
-           <BtnBar loadingSave={loadingSave} backFunc={handleGoBack} saveFunc={saveBlog}></BtnBar>
+           <BtnBar loadingSave={loadingSave} deleteFunc={() => {console.log('deletefunc')}} backFunc={handleGoBack} saveFunc={saveBlog}></BtnBar>
         </PageAnimation>
       </section>
     </div>
@@ -100,3 +98,15 @@ const useUpdateBlogLocally = (titleValue: string, contentValue: string, blogData
     };
   }, [titleValue, contentValue, blogData]);
 };
+
+//need to make a system to display an are you sure delete thing
+//as well as to only delete on the yes there
+const useDeleteBlog = (blogData) => {
+  const deleteBlog = async() => {
+    try{
+
+    } catch(err){
+      console.log(err)
+    }
+  }
+}
