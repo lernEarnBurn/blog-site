@@ -38,6 +38,11 @@
 
 }
 
+.alert {
+  background-color: #646cffb5;
+  color: hsl(var(--background));
+}
+
 .icon {
   color: hsl(var(--background));
 }

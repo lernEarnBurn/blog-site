@@ -1,5 +1,8 @@
 import { PageAnimation } from "./PageAnimation";
 import { BtnBar } from './BackBar';
+import { Alert } from "./Alert";
+import { AnimatePresence } from "framer-motion";
+
 
 import { useEffect, useState } from "react";
 import axios from "axios";
@@ -34,7 +37,7 @@ export function EditBlogPage() {
   useUpdateBlogLocally(titleValue, contentValue, blogData);
 
   //have a saved thing pop up (shadcn might have an easy out of the box solution)
-  const { loadingSave, saveBlog } = useUpdateBlogOnDb(blogData, titleValue, contentValue);
+  const { loadingSave, saveBlog, showAlert } = useUpdateBlogOnDb(blogData, titleValue, contentValue);
 
   const { deleteBlog, deleteLoading } = useDeleteBlog(blogData, navigate)
 
@@ -43,6 +46,7 @@ export function EditBlogPage() {
   return (
     <div className="scroller h-[100.01vh]">
       <section className="h-[100vh] w-[100vw] grid place-items-center">
+        <AnimatePresence>{showAlert && <Alert/>}</AnimatePresence>
         <PageAnimation>
             <div className="flex flex-col z-10 rounded-lg dark:bg-opacity-90 py-2 px-10 border-2 light:border-black shadow-sm w-[35vw] h-[87vh] overflow-hidden">      
               <textarea rows={1} maxLength={25} spellCheck="false" onChange={handleTitleChange} value={titleValue} className="w-[25vw] blue mx-auto text-2xl font-bold text-center ghost-input"/>
@@ -59,6 +63,7 @@ export function EditBlogPage() {
 
 const useUpdateBlogOnDb = (blogData: Blog, titleValue: string, contentValue: string) => {
   const [loadingSave, setLoadingSave] = useState(false);
+  const [showAlert, setShowAlert] = useState(false)
 
   const saveBlog = async () => {
     setLoadingSave(true);
@@ -76,12 +81,17 @@ const useUpdateBlogOnDb = (blogData: Blog, titleValue: string, contentValue: str
         }
       );
       setLoadingSave(false);
+
+      setShowAlert(true)
+      setTimeout(() => {
+        setShowAlert(false)
+      }, 900)
     } catch (err) {
       console.log(err);
     }
   };
 
-  return { loadingSave, saveBlog };
+  return { loadingSave, saveBlog, showAlert };
 };
 
 
