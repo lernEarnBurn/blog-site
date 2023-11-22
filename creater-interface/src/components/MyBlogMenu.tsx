@@ -2,10 +2,12 @@ import { useEffect, useState, useRef } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
 
+
 import { FilePlus } from 'lucide-react';
 import { BlogSkeleton } from "./ui/BlogSkeleton";
 
 import { motion } from "framer-motion";
+
 
 export interface Blog {
   _id: string;
@@ -47,7 +49,7 @@ export function MyBlogMenu() {
       navigate(`/blogs/${blog._id}`);
     }, 350);
   }
-
+  
   //make the blog menu screen animate on the exit to createblog moving left so looks like scrolling to side
   //or maybe make it so that there is a wide viewport but it can't be scrolled to unless hit button 
   //maybe even with snap scroll
@@ -60,10 +62,12 @@ export function MyBlogMenu() {
   }
 
     //bad bug on the exit transition causing white to be at bottom of screen
-    
+
     //need to come up with a way to check if coming from createblog in order to run a unique 
     //initial animation (maybe with the history hook)
   return (
+    <>
+      <div className="fix-bg-bug"></div>
       <motion.div className="top-div relative top-24 flex flex-col gap-4 overflow-y-auto min-h-[100vh] min-w-[99vw]  items-center pb-10"
         exit={animateToCreateBlog ? {x: -1000 } : {}}
         transition={{ duration: .5 }}
@@ -94,6 +98,7 @@ export function MyBlogMenu() {
         )}
 
       </motion.div>
+    </>
   )
 }
 

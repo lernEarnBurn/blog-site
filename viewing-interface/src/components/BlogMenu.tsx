@@ -48,6 +48,7 @@ export function BlogMenu() {
 
   return (
      <>
+      <div className="fix-bg-bug"></div>
       <div className="top-div relative top-24 flex flex-col gap-4 overflow-y-auto min-h-[100vh] min-w-[99vw] items-center pb-10">
         {!loading ? (
           blogs.map((blog, index) => (

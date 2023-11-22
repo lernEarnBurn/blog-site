@@ -21,6 +21,16 @@
   background-color: transparent;
 }
 
+.fix-bg-bug {
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 1000;
+  z-index: -999;
+  background-color: hsl(var(--background));
+
+}
 
 .blue {
   color: #646cff;
