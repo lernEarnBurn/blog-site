@@ -5,6 +5,8 @@ import { useNavigate } from "react-router-dom";
 import { FilePlus } from 'lucide-react';
 import { BlogSkeleton } from "./ui/BlogSkeleton";
 
+import { motion } from "framer-motion";
+
 export interface Blog {
   _id: string;
   author: User;
@@ -46,10 +48,26 @@ export function MyBlogMenu() {
     }, 350);
   }
 
+  //make the blog menu screen animate on the exit to createblog moving left so looks like scrolling to side
+  //or maybe make it so that there is a wide viewport but it can't be scrolled to unless hit button 
+  //maybe even with snap scroll
+
+  const [animateToCreateBlog, setAnimateToCreateBlog] = useState(false)
+  
+  function toCreateBlog(){
+    setAnimateToCreateBlog(true)
+    navigate('/blogs/create-blog')
+  }
+
+    //bad bug on the exit transition causing white to be at bottom of screen
+    
+    //need to come up with a way to check if coming from createblog in order to run a unique 
+    //initial animation (maybe with the history hook)
   return (
-    <>
-      <div className="top-div relative top-24 flex flex-col gap-4 overflow-y-auto min-h-[100vh] min-w-[99vw] items-center pb-10">
-        
+      <motion.div className="top-div relative top-24 flex flex-col gap-4 overflow-y-auto min-h-[100vh] min-w-[99vw]  items-center pb-10"
+        exit={animateToCreateBlog ? {x: -1000 } : {}}
+        transition={{ duration: .5 }}
+      >
         {!loading ? (
           blogs.map((blog, index) => (
             <div
@@ -70,13 +88,12 @@ export function MyBlogMenu() {
         )}
 
         {!loading && (
-          <div onClick={() => {navigate('/blogs/create-blog')}} className="z-10 rounded-lg dark:bg-opacity-90 mt-[4.5vh] py-2 px-10 border-2 light:border-black shadow-sm w-[35vw] h-[87vh] overflow-hidden">
+          <div onClick={toCreateBlog} className="z-10 rounded-lg dark:bg-opacity-90 mt-[4.5vh] py-2 px-10 border-2 light:border-black shadow-sm w-[35vw] h-[87vh] overflow-hidden">
             <FilePlus className="blue w-[30vw] h-[80vh]"/>
           </div>
         )}
 
-      </div>
-    </>
+      </motion.div>
   )
 }
 
