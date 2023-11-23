@@ -22,6 +22,7 @@ export interface User {
   password: string;
 }
 
+
 export function MyBlogMenu() {
   const { blogs, loading } = useFetchMyBlogs();
   
@@ -49,10 +50,6 @@ export function MyBlogMenu() {
       navigate(`/blogs/${blog._id}`);
     }, 350);
   }
-  
-  //make the blog menu screen animate on the exit to createblog moving left so looks like scrolling to side
-  //or maybe make it so that there is a wide viewport but it can't be scrolled to unless hit button 
-  //maybe even with snap scroll
 
   const [animateToCreateBlog, setAnimateToCreateBlog] = useState(false)
   
@@ -61,14 +58,16 @@ export function MyBlogMenu() {
     navigate('/blogs/create-blog')
   }
 
-    //bad bug on the exit transition causing white to be at bottom of screen
-
-    //need to come up with a way to check if coming from createblog in order to run a unique 
-    //initial animation (maybe with the history hook)
+  //make a context api that is an empty array of strings and on each possible route
+  //have that component push the route and when get to this file have it check if the
+  //last route visited was create blog and if so make a state true that will run the animations
+  
   return (
     <>
       <div className="fix-bg-bug"></div>
       <motion.div className="top-div relative top-24 flex flex-col gap-4 overflow-y-auto min-h-[100vh] min-w-[99vw]  items-center pb-10"
+        /*initial={props.animate ? {x: -1000 } : {}}
+        animate={props.animate ? {x: 0 } : {}}*/
         exit={animateToCreateBlog ? {x: -1000 } : {}}
         transition={{ duration: .5 }}
       >
