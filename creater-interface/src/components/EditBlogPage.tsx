@@ -20,7 +20,7 @@ export function EditBlogPage() {
   
   const handleGoBack = async() => {
     navigate(-1);
-    await saveBlog()
+    await saveBlog(false)
   }
 
   const [titleValue, setTitleValue] = useState(blogData?.title)
@@ -58,7 +58,7 @@ export function EditBlogPage() {
               <h3 className="text-center text-sm">By Me</h3>
               <textarea spellCheck="false" onChange={handleContentChange} rows={21} maxLength={1000} value={contentValue} className="w-[30vw] mt-2 mx-auto ghost-input"/>
             </div>
-           <BtnBar loadingSave={loadingSave} deleteLoading={deleteLoading} deleteFunc={deleteBlog} backFunc={handleGoBack} saveFunc={saveBlog}></BtnBar>
+           <BtnBar loadingSave={loadingSave} deleteLoading={deleteLoading} deleteFunc={deleteBlog} backFunc={handleGoBack} saveFunc={() => saveBlog(true)}></BtnBar>
         </PageAnimation>
       </section>
     </div>
@@ -70,7 +70,7 @@ const useUpdateBlogOnDb = (blogData: Blog, titleValue: string, contentValue: str
   const [loadingSave, setLoadingSave] = useState(false);
   const [showAlert, setShowAlert] = useState(false)
 
-  const saveBlog = async () => {
+  const saveBlog = async (shouldShowAlert: boolean) => {
     setLoadingSave(true);
     const token = localStorage.getItem('token');
 
@@ -86,11 +86,13 @@ const useUpdateBlogOnDb = (blogData: Blog, titleValue: string, contentValue: str
         }
       );
       setLoadingSave(false);
-
-      setShowAlert(true)
-      setTimeout(() => {
-        setShowAlert(false)
-      }, 900)
+      if(shouldShowAlert){
+        setShowAlert(true)
+        setTimeout(() => {
+          setShowAlert(false)
+        }, 900)
+      }
+      
     } catch (err) {
       console.log(err);
     }
