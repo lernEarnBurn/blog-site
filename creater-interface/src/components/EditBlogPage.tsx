@@ -3,8 +3,8 @@ import { BtnBar } from './BackBar';
 import { Alert } from "./Alert";
 import { AnimatePresence } from "framer-motion";
 
-
-import { useEffect, useState } from "react";
+import { RouteHistoryContext } from "@/contexts/routeHistoryContext";
+import { useEffect, useState, useContext } from "react";
 import axios from "axios";
 
 import { Blog } from "./MyBlogMenu";
@@ -41,7 +41,12 @@ export function EditBlogPage() {
 
   const { deleteBlog, deleteLoading } = useDeleteBlog(blogData, navigate)
 
-  //make delete functionality
+  const {routeHistory, setRouteHistory } = useContext(RouteHistoryContext)
+
+  useEffect(() => {
+    setRouteHistory((prevHistory: string[]) => [...prevHistory, "/editBlog"]);
+
+  }, [])
   
   return (
     <div className="scroller h-[100.01vh]">

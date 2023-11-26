@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState, useRef, useContext } from "react"
 import axios from "axios"
 import { useNavigate } from "react-router-dom";
 
@@ -8,6 +8,7 @@ import { BlogSkeleton } from "./ui/BlogSkeleton";
 
 import { motion } from "framer-motion";
 
+import { RouteHistoryContext } from "@/contexts/routeHistoryContext";
 
 export interface Blog {
   _id: string;
@@ -58,16 +59,21 @@ export function MyBlogMenu() {
     navigate('/blogs/create-blog')
   }
 
-  //make a context api that is an empty array of strings and on each possible route
-  //have that component push the route and when get to this file have it check if the
-  //last route visited was create blog and if so make a state true that will run the animations
+  const { routeHistory, setRouteHistory } = useContext(RouteHistoryContext)
+  const [animate] = useState(routeHistory[routeHistory.length - 1] === '/createBlog');
+
+
+  useEffect(() => {
+    setRouteHistory((prevHistory: string[]) => [...prevHistory, "/myBlogMenu"]);
+  }, [])
+
   
   return (
     <>
       <div className="fix-bg-bug"></div>
       <motion.div className="top-div relative top-24 flex flex-col gap-4 overflow-y-auto min-h-[100vh] min-w-[99vw]  items-center pb-10"
-        /*initial={props.animate ? {x: -1000 } : {}}
-        animate={props.animate ? {x: 0 } : {}}*/
+        initial={animate ? {x: -1000 } : {}}
+        animate={animate ? {x: 0 } : {}}
         exit={animateToCreateBlog ? {x: -1000 } : {}}
         transition={{ duration: .5 }}
       >
