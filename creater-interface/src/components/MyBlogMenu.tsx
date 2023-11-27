@@ -26,6 +26,7 @@ export interface User {
 
 export function MyBlogMenu() {
   const { blogs, loading } = useFetchMyBlogs();
+
   
   const navigate = useNavigate()
   const itemsRef = useRef<Array<HTMLDivElement | null>>([])
@@ -112,12 +113,15 @@ function useFetchMyBlogs() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
   const [loading, setLoading] = useState(false);
 
+  console.log(`blogs: ${blogs}`)
+
+
   useEffect(() => {
     const getMyBlogs = async () => {
       const storedBlogs = localStorage.getItem('myBlogs');
       const userString = localStorage.getItem('user');
 
-      if (storedBlogs) {
+      if (storedBlogs && Array.isArray(JSON.parse(storedBlogs))) {
         setBlogs(JSON.parse(storedBlogs));
       } else {
         try {
@@ -135,6 +139,8 @@ function useFetchMyBlogs() {
     };
 
     getMyBlogs();
+    console.log(`blogs: ${blogs}`)
+
   }, []);
 
   return { blogs, loading };

@@ -1,5 +1,5 @@
 import { PageAnimation } from "./PageAnimation";
-import { BtnBar } from './BackBar';
+import { EditBtnBar } from './EditBackBar';
 import { Alert } from "./Alert";
 import { AnimatePresence } from "framer-motion";
 
@@ -58,7 +58,7 @@ export function EditBlogPage() {
               <h3 className="text-center text-sm">By Me</h3>
               <textarea spellCheck="false" onChange={handleContentChange} rows={21} maxLength={1000} value={contentValue} className="w-[30vw] mt-2 mx-auto ghost-input"/>
             </div>
-           <BtnBar loadingSave={loadingSave} deleteLoading={deleteLoading} deleteFunc={deleteBlog} backFunc={handleGoBack} saveFunc={() => saveBlog(true)}></BtnBar>
+           <EditBtnBar loadingSave={loadingSave} deleteLoading={deleteLoading} deleteFunc={deleteBlog} backFunc={handleGoBack} saveFunc={() => saveBlog(true)}></EditBtnBar>
         </PageAnimation>
       </section>
     </div>
@@ -119,7 +119,6 @@ const useUpdateBlogLocally = (titleValue: string, contentValue: string, blogData
   }, [titleValue, contentValue, blogData]);
 };
 
-//add loading
 const useDeleteBlog = (blogData: Blog, navigate: NavigateFunction) => {
   const [deleteLoading, setDeleteLoading] = useState(false)
 
@@ -128,7 +127,6 @@ const useDeleteBlog = (blogData: Blog, navigate: NavigateFunction) => {
     const myBlogs = localStorage.getItem('myBlogs');
     const storedBlogs = JSON.parse(myBlogs) || [];
     const updatedBlogs = storedBlogs.filter((blog: Blog) => blog._id !== blogData._id);
-    console.log()
     localStorage.setItem('myBlogs', JSON.stringify(updatedBlogs))
   }
 

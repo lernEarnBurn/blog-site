@@ -20,7 +20,6 @@ function App() {
   const [routeHistory, setRouteHistory] = useState([])
 
   const location = useLocation()
-  console.log(routeHistory)
   
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
