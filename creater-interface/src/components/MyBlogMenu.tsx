@@ -75,7 +75,7 @@ export function MyBlogMenu() {
         initial={animate ? {x: -1000 } : {}}
         animate={animate ? {x: 0 } : {}}
         exit={animateToCreateBlog ? {x: -1000 } : {}}
-        transition={{ duration: .5 }}
+        transition={{ duration: .3 }}
       >
         {!loading ? (
           blogs.map((blog, index) => (
