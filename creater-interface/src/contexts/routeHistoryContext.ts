@@ -1,11 +1,13 @@
-import { createContext, Dispatch, SetStateAction } from 'react';
+import { createContext, Dispatch, SetStateAction } from "react";
 
 type RouteHistoryContextType = {
   routeHistory: string[];
   setRouteHistory: Dispatch<SetStateAction<string[]>>;
 };
 
-export const RouteHistoryContext = createContext<RouteHistoryContextType | undefined>(undefined);
+export const RouteHistoryContext = createContext<
+  RouteHistoryContextType | undefined
+>(undefined);
 
 /*
 export const useRouteHistory = () => {

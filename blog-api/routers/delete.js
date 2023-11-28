@@ -1,10 +1,9 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
-const postController = require('../controllers/postController')
-const verifyToken = require('../controllers/authController').verifyToken
+const postController = require("../controllers/postController");
+const verifyToken = require("../controllers/authController").verifyToken;
 
-router.delete('/posts/:postId', verifyToken, postController.deletePost)
+router.delete("/posts/:postId", verifyToken, postController.deletePost);
 
-
-module.exports = router
+module.exports = router;
